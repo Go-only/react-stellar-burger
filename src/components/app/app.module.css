@@ -5,3 +5,10 @@
   background-color: #131316;
   color: #f2f2f3;
 }
+
+.main {
+  display: flex;
+  column-gap: 40px;
+  width: 1240px;
+  margin: 0 auto;
+}
