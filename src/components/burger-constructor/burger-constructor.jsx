@@ -1,5 +1,5 @@
 import styles from "./burger-constructor.module.css";
-import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export default function BurgerConstructor({ ingredients }) {
@@ -40,6 +40,15 @@ export default function BurgerConstructor({ ingredients }) {
           thumbnail={buns[1].image}
           extraClass="ml-8"
         />
+      </div>
+      <div className={`${styles.zakaz} mt-10 mr-8`}>
+        <div className={`${styles.total}`}>
+        <p className="text text_type_digits-medium mr-2">2456</p>
+        <CurrencyIcon type="primary" />
+        </div>
+        <Button htmlType="button" type="primary" size="large">
+          Оформить заказ
+        </Button>
       </div>
     </section >
   );

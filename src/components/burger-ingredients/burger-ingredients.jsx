@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import ListIngredients from "../list-ingredients/list-ingredients";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export default function BurgerIngredients({ ingredients }) {
   console.log(ingredients);
-  const [current, setCurrent] = React.useState('one');
+  const [current, setCurrent] = useState('one');
 
   const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
+  const main = ingredients.filter((ingredient) => ingredient.type == 'main');
   const sauces = ingredients.filter((ingredient) => ingredient.type === 'sauce');
-  const fillings = ingredients.filter((ingredient) => ingredient.type !== 'bun' && ingredient.type !== 'sauce');
 
   return (
     <section className={styles.section}>
@@ -31,7 +31,7 @@ export default function BurgerIngredients({ ingredients }) {
 
       <ListIngredients title="Булки" ingredients={buns} />
       <ListIngredients title="Соусы" ingredients={sauces} />
-      <ListIngredients title="Начинки" ingredients={fillings} />
+      <ListIngredients title="Начинки" ingredients={main} />
 
       </div>
     </section>

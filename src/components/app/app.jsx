@@ -30,7 +30,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return <p>Загрузка данных...</p>;
+    return <p>Идет загрузка ингредиентов</p>;
   }
 
   if (error) {
