@@ -4,8 +4,9 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { OrderDetails } from "../order-details/order-details";
 import { Modal } from "../modal/modal";
 import { useState } from "react";
+import PropTypes from 'prop-types';
 
-export default function BurgerConstructor({ ingredients, onClick}) {
+export default function BurgerConstructor({ ingredients}) {
 
   const [orderModal, setOrderModal] = useState(false);
 
@@ -72,3 +73,15 @@ export default function BurgerConstructor({ ingredients, onClick}) {
   );
 
 }
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};

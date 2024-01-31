@@ -1,12 +1,11 @@
 import styles from "./ingredient-details.module.css";
+import PropTypes from 'prop-types';
 
-export const IngredientDetails = ({ title, calories, carbohydrates, fat, image, name, proteins }) => {
+export const IngredientDetails = ({ calories, carbohydrates, fat, image, name, proteins }) => {
   const default_text = "text text_type_digits-default"
 
   return (
     <>
-      <p className="text text_type_main-large">{title}</p>
-
       <div className={`${styles.container} pl-25 pr-25 pb-15`}>
         <img className={styles.img} src={image} alt={name} />
         <h3 className="text_type_main-medium mt-4 mb-8">{name}</h3>
@@ -32,3 +31,12 @@ export const IngredientDetails = ({ title, calories, carbohydrates, fat, image, 
     </>
   );
 }
+
+IngredientDetails.propTypes = {
+  calories: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired,
+  fat: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  proteins: PropTypes.number.isRequired,
+};

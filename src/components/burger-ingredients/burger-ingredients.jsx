@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import ListIngredients from "../list-ingredients/list-ingredients";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 export default function BurgerIngredients({ ingredients }) {
   console.log(ingredients);
@@ -29,11 +30,23 @@ export default function BurgerIngredients({ ingredients }) {
       </div>
       <div className={`${styles.custom_scroll} ${styles.ingredients}`}>
 
-      <ListIngredients title="Булки" ingredients={buns} />
-      <ListIngredients title="Соусы" ingredients={sauces} />
-      <ListIngredients title="Начинки" ingredients={main} />
+      <ListIngredients titleIngredient="Булки" ingredients={buns} />
+      <ListIngredients titleIngredient="Соусы" ingredients={sauces} />
+      <ListIngredients titleIngredient="Начинки" ingredients={main} />
 
       </div>
     </section>
   );
 }
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
