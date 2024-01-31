@@ -1,7 +1,7 @@
 {
   "name": "react-burger-starter",
   "version": "0.1.0",
-  "homepage": "https://Go-only.github.io/react-gh-pages",
+  "homepage": "https://Go-only.github.io/react-burger",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.2",
