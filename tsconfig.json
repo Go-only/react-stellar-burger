@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "src/components/order-details/order-details.jsx"  ]
 }

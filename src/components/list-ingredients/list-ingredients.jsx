@@ -17,7 +17,7 @@ export default function ListIngredients({ title, ingredients }) {
         {ingredients.map(data => <BurgerIngredient
                                     key={data._id}
                                     {...data}
-                                    onClick={() => setIngredientModal(data)} />)}
+                                    onClickIngredient={() => setIngredientModal(data)} />)}
                                     
       </ul>
       {ingredientModal && <Modal title="Детали ингредиента" onClose={closeModalIngredient}>

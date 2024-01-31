@@ -1,8 +1,21 @@
 import styles from "./burger-constructor.module.css";
 import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { OrderDetails } from "../order-details/order-details";
+import { Modal } from "../modal/modal";
+import { useState } from "react";
 
-export default function BurgerConstructor({ ingredients }) {
+export default function BurgerConstructor({ ingredients, onClick}) {
+
+  const [orderModal, setOrderModal] = useState(false);
+
+  const handleOrderClick = () => {
+    setOrderModal(true);
+  };
+
+  const closeModalOrder = () => {
+    setOrderModal(false);
+  };
 
   const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
   const other = ingredients.filter((ingredient) => ingredient.type !== 'bun');
@@ -37,7 +50,7 @@ export default function BurgerConstructor({ ingredients }) {
           isLocked={true}
           text="Краторная булка N-200i (низ)"
           price={200}
-          thumbnail={buns[1].image}
+          thumbnail={buns[0].image}
           extraClass="ml-8"
         />
       </div>
@@ -46,9 +59,14 @@ export default function BurgerConstructor({ ingredients }) {
         <p className="text text_type_digits-medium mr-2">2456</p>
         <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button htmlType="button" type="primary" size="large" onClick={handleOrderClick}>
           Оформить заказ
         </Button>
+        {orderModal && (
+        <Modal onClose={closeModalOrder}>
+          <OrderDetails />
+        </Modal>
+      )}
       </div>
     </section >
   );

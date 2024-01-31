@@ -29,12 +29,15 @@ function App() {
     fetchIngredients();
   }, []);
 
-  if (loading) {
-    return <p>Идет загрузка ингредиентов</p>;
-  }
-
-  if (error) {
-    return <p>Произошла ошибка: {error}</p>;
+  if (loading || error) {
+    return (
+      <div className={styles.app}>
+        <AppHeader />
+        <main className={styles.main}>
+          <p className={styles.loading}>{loading ? 'Идет загрузка ингредиентов' : `Произошла ошибка: ${error}`}</p>
+        </main>
+      </div>
+    );
   }
 
   return (
