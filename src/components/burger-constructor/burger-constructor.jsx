@@ -4,7 +4,7 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { OrderDetails } from "../order-details/order-details";
 import { Modal } from "../modal/modal";
 import { useState } from "react";
-import PropTypes from 'prop-types';
+import { ingredientType } from '../../utils/prop-types';
 
 export default function BurgerConstructor({ ingredients}) {
 
@@ -25,7 +25,7 @@ export default function BurgerConstructor({ ingredients}) {
 
   return (
     <section className={`${styles.section} mt-25`}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', height: '58vh' }}>
+      <div className={styles.wrapper}>
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -75,13 +75,5 @@ export default function BurgerConstructor({ ingredients}) {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-    })
-  ).isRequired,
+  ingredient: ingredientType.isRequired,
 };

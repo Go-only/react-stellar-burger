@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import ListIngredients from "../list-ingredients/list-ingredients";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+import { ingredientType } from '../../utils/prop-types';
 
 export default function BurgerIngredients({ ingredients }) {
   console.log(ingredients);
@@ -17,7 +17,7 @@ export default function BurgerIngredients({ ingredients }) {
 
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
 
-      <div style={{ display: 'flex' }}>
+      <div className={styles.wrapper}>
         <Tab value="one" active={current === 'one'} onClick={() => setCurrent('one')}>
           Булки
         </Tab>
@@ -40,13 +40,5 @@ export default function BurgerIngredients({ ingredients }) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      image: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-    })
-  ).isRequired,
+  ingredient: ingredientType.isRequired,
 };

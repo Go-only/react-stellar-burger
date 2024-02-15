@@ -19,15 +19,16 @@ function App() {
         }
         const data = await response.json();
         setIngredients(data.data);
-        setLoading(false);
       } catch (err) {
         setError(err.message);
-        setLoading(false);
+      } finally {
+        setLoading(false); // Вызов setLoading(false) в блоке finally
       }
     };
-
+  
     fetchIngredients();
   }, []);
+  
 
   if (loading || error) {
     return (

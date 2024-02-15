@@ -1,6 +1,12 @@
 .section {
     width: 600px;
 }
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 58vh;
+}
 
 .list {
     display: flex;

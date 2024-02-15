@@ -1,6 +1,9 @@
 .section {
   width: 600px;
 }
+.wrapper {
+  display: flex;
+}
 
 .ingredients {
   height: 65vh;

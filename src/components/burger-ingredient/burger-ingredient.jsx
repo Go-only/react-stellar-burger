@@ -9,7 +9,7 @@ export default function BurgerIngredient({image, name, price, onClickIngredient}
   return (
     <li className={`${styles.item} ${itemMargin}`} onClick={onClickIngredient}>
       <div className={styles.counter}><p className={styles.num}>1</p></div>
-      <img src={image} />
+      <img src={image} alt={name} />
       <div className={styles.price}>
         <p className="text text_type_digits-default mt-1 mb-1">{price}</p>
         <CurrencyIcon type="primary" />
