@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkmark {
+    position: relative;
+    display: inline-block;
+}
+
+.checkmark svg {
+    width: 48px;
+    height: 48px;
+}
+
+.don {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

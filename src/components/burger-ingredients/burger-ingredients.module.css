@@ -1,0 +1,15 @@
+.section {
+  width: 600px;
+}
+
+.ingredients {
+  height: 65vh;
+  overflow-y: scroll;
+}
+
+.custom_scroll::-webkit-scrollbar {
+	width: 12px;
+}
+.custom_scroll::-webkit-scrollbar-thumb {
+	background: #8585AD;
+}
