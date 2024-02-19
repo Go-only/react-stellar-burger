@@ -1,5 +1,5 @@
 import styles from "./ingredient-details.module.css";
-import { ingredientType } from '../../utils/prop-types';
+import PropTypes from 'prop-types';
 
 export const IngredientDetails = ({ calories, carbohydrates, fat, image, name, proteins }) => {
   const default_text = "text text_type_digits-default"
@@ -31,5 +31,10 @@ export const IngredientDetails = ({ calories, carbohydrates, fat, image, name, p
 }
 
 IngredientDetails.propTypes = {
-  ingredient: ingredientType.isRequired,
+  calories: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired,
+  fat: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  proteins: PropTypes.number.isRequired,
 };

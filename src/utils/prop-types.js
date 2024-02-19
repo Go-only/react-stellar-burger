@@ -6,8 +6,4 @@ export const ingredientType = PropTypes.shape({
   type: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  proteins: PropTypes.number.isRequired,
 });

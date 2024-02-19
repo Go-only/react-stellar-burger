@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/prop-types';
 
 export default function ListIngredients({ titleIngredient, ingredients }) {
 
@@ -31,5 +30,9 @@ export default function ListIngredients({ titleIngredient, ingredients }) {
 
 ListIngredients.propTypes = {
   titleIngredient: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(ingredientType).isRequired, // Используем ingredientType здесь
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };

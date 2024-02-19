@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import ListIngredients from "../list-ingredients/list-ingredients";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/prop-types';
 
 export default function BurgerIngredients({ ingredients }) {
@@ -40,5 +41,5 @@ export default function BurgerIngredients({ ingredients }) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredient: ingredientType.isRequired,
+  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
 };

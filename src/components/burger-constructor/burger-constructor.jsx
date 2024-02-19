@@ -4,9 +4,10 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { OrderDetails } from "../order-details/order-details";
 import { Modal } from "../modal/modal";
 import { useState } from "react";
+import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/prop-types';
 
-export default function BurgerConstructor({ ingredients}) {
+export default function BurgerConstructor({ ingredients }) {
 
   const [orderModal, setOrderModal] = useState(false);
 
@@ -75,5 +76,5 @@ export default function BurgerConstructor({ ingredients}) {
 }
 
 BurgerConstructor.propTypes = {
-  ingredient: ingredientType.isRequired,
+  ingredients: PropTypes.arrayOf(ingredientType).isRequired,
 };
