@@ -4,9 +4,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const initialState = {
   ingredients: [], // Массив ингредиентов
   loading: true, // Флаг загрузки
-  error: null // Ошибка (если есть)
+  error: null, // Ошибка (если есть)
+  currentTab: 'one', // Текущий выбранный таб
+  scrollPositions: {
+    one: 0,
+    two: 0,
+    three: 0
+  }
 };
 
+const api_url = 'https://norma.nomoreparties.space/api/ingredients';
 const sliceName = 'burgerIngredients';
 
 // Создаем асинхронное действие (thunk) для загрузки ингредиентов
@@ -14,7 +21,7 @@ export const fetchIngredients = createAsyncThunk(
   `${sliceName}/fetchIngredients`,
   async (_, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const response = await fetch('https://norma.nomoreparties.space/api/ingredients');
+      const response = await fetch(api_url);
       if (!response.ok) {
         return rejectWithValue({ message: `Ошибка при загрузке данных: ${response.status}` });
       }
@@ -31,7 +38,15 @@ export const fetchIngredients = createAsyncThunk(
 export const burgerIngredientsSlice = createSlice({
   name: sliceName,
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentTab(state, action) {
+      state.currentTab = action.payload;
+    },
+    setScrollPosition(state, action) {
+      const { tab, position } = action.payload;
+      state.scrollPositions[tab] = position;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchIngredients.pending, state => {
@@ -49,6 +64,6 @@ export const burgerIngredientsSlice = createSlice({
       });
   }
 });
-console.log(burgerIngredientsSlice);
 
+export const { setCurrentTab, setScrollPosition } = burgerIngredientsSlice.actions;
 export default burgerIngredientsSlice.reducer; // Экспортируем редьюсер
