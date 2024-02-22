@@ -18,13 +18,13 @@ export default function ListIngredients({ titleIngredient, ingredients }) {
           <BurgerIngredient
             key={data._id}
             {...data}
-            onClickIngredient={() => dispatch(openModal({ isOpen: true, content: {...data} }))}
+            onClickIngredient={() => dispatch(openModal({ isOpen: true, title:"Детали ингредиента", content: {...data} }))}
           />
         ))}
       </ul>
 
       {modalState.isOpen && (
-        <Modal title="Детали ингредиента" onClose={() => dispatch(closeModal())}>
+        <Modal title={modalState.title} onClose={() => dispatch(closeModal())}>
          <IngredientDetails {...modalState.content} />
        </Modal>
       )}

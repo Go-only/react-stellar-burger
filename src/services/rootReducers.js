@@ -1,10 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import burgerIngredientsReducer, { burgerIngredientsSlice } from './slices/burgerIngredientsSlice';
-import ingredientsReducer, { ingredientsSlice } from './slices/ingredientsSlice';
+import burgerConstructorReducer, { burgerConstructorSlice } from './slices/burgerConstructorSlice';
 import modalReducer, { modalSlice } from './slices/modalSlice';
 
 export const rootReducer = combineReducers({
   [burgerIngredientsSlice.name]: burgerIngredientsReducer,
-  [ingredientsSlice.name]: ingredientsReducer,
+  [burgerConstructorSlice.name]: burgerConstructorReducer,
   [modalSlice.name]: modalReducer,
 });

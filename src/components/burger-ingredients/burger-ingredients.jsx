@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchIngredients } from "../../services/slices/burgerIngredientsSlice";
 
 export default function BurgerIngredients() {
-  // console.log(ingredients);
+  
   const [current, setCurrent] = useState('one');
 
   const dispatch = useDispatch();
