@@ -18,12 +18,6 @@
     margin: 4px 0;
 }
 
-.item {
-    display: flex;
-    align-items: center;
-    column-gap: 8px;
-}
-
 .zakaz {
     display: flex;
     align-items: center;
@@ -39,4 +33,13 @@
 .total svg {
     width: 36px;
     height: 36px;
+}
+
+.title {
+    text-align: center;
+    font-size: 30px;
+}
+
+.element {
+    flex-grow: inherit;
 }

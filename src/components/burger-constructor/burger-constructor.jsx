@@ -1,80 +1,101 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OrderDetails } from '../order-details/order-details';
 import { Modal } from '../modal/modal';
-import { openModal, closeModal } from '../../services/slices/modalSlice';
-import { setDraggedIngredientId, addConstructorIngredient } from '../../services/slices/burgerConstructorSlice';
+import { openModal, closeModal, selectActiveModal } from '../../services/slices/modalSlice';
+import { addConstructorIngredient, selectTotalPrice, removeIngredient } from '../../services/slices/burgerConstructorSlice';
 import { selectIngredients } from '../../services/slices/burgerIngredientsSlice';
-// import PropTypes from 'prop-types';
+import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import styles from './burger-constructor.module.css';
+
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const modalState = useSelector(state => state.modal);
+  const activeModal = useSelector(selectActiveModal);
   const constructorIngredients = useSelector(state => state.burgerConstructor.constructorIngredients);
   const bun = useSelector(state => state.burgerConstructor.bun);
   const ingredients = useSelector(selectIngredients);
-
-   console.log(ingredients);
+  const totalPrice = useSelector(selectTotalPrice);
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
     drop: (droppedIngredientId, monitor) => {
-      const draggedIngredient = ingredients.find(ingredient => ingredient._id === droppedIngredientId); // Найти информацию о перетаскиваемом ингредиенте
-      console.log(draggedIngredient);
-      // console.log(droppedIngredientId);
-      dispatch(addConstructorIngredient(draggedIngredient));
-      dispatch(setDraggedIngredientId(droppedIngredientId));
+      onDropHandler(droppedIngredientId);
     },
     collect: monitor => ({
       isHover: monitor.isOver()
     })
   });
 
+  function onDropHandler(droppedIngredientId) {
+    // Находим информацию о перетаскиваемом ингредиенте
+    const draggedIngredient = ingredients.find(ingredient => ingredient._id === droppedIngredientId._id);
   
+    if (draggedIngredient) {
+        dispatch(addConstructorIngredient(draggedIngredient)); // Остальные типы ингредиентов записываем отдельно в массив объектов в хранилище redux
+    }
+};
+
+const handleDeleteIngredient = (item) => dispatch(removeIngredient(item));
 
   return (
     <section className={`${styles.section} mt-25`}>
-      <div className={styles.wrapper} ref={dropTarget} style={{ border: isHover ? '1px solid red' : 'transparent' }}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text="Краторная булка N-200i (верх)"
-          price={200}
-          // thumbnail={buns[0].image}
-          extraClass="ml-8"
-        />
+      <div className={styles.wrapper} ref={dropTarget} style={{ border: isHover ? '1px solid #4c4cff' : 'transparent' }}>
+        
+        <span className={styles.title}>
+          {!isHover && !bun && constructorIngredients.length === 0 && 'Перетащите сюда ингредиенты для бургера'}
+          {isHover && 'Отпустите ингредиент над выделенной областью'}
+        </span>
+
+        {/* Верхняя булка */}
+        {bun && (
+          
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
+            extraClass={`${styles.element} ml-8`}
+          />
+        )}
+
+       {/* Список остальных ингредиентов */}
         <ul className={styles.list}>
-          {ingredients.map((ingredient) => (
-            <li key={ingredient._id} className={styles.item}>
-              <DragIcon type="primary" />
-              <ConstructorElement
-                text={ingredient.name}
-                price={ingredient.price}
-                thumbnail={ingredient.image}
+          {constructorIngredients.map((ingredient, index) => (
+              <BurgerConstructorItem
+                item={ingredient}
+                index={index}
+                key={ingredient.id}
+                handleDeleteIngredient={handleDeleteIngredient}
               />
-            </li>
           ))}
         </ul>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text="Краторная булка N-200i (низ)"
-          price={200}
-          // thumbnail={buns[0].image}
-          extraClass="ml-8"
-        />
+
+        {/* Нижняя булка */}
+        {bun && (
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
+            extraClass={`${styles.element} ml-8`}
+          />
+        )}
       </div>
       <div className={`${styles.zakaz} mt-10 mr-8`}>
         <div className={`${styles.total}`}>
-          <p className="text text_type_digits-medium mr-2">2456</p>
+          <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={() => dispatch(openModal({ isOpen: true, content: 'Данные заказа' }))}>
+        <Button htmlType="button" type="primary" size="large" onClick={() => dispatch(openModal({ isOpen: true, content: 'Данные заказа', active: 'order' }))}
+          disabled={bun === null && constructorIngredients.length === 0}
+        >
           Оформить заказ
         </Button>
-        {modalState.isOpen && (
+        {modalState.isOpen && activeModal === 'order' && (
           <Modal onClose={() => dispatch(closeModal())}>
             <OrderDetails {...modalState.content} />
           </Modal>
@@ -83,13 +104,3 @@ export default function BurgerConstructor() {
     </section>
   );
 }
-
-// BurgerConstructor.propTypes = {
-//   ingredients: PropTypes.arrayOf(PropTypes.shape({
-//     _id: PropTypes.string.isRequired,
-//     name: PropTypes.string.isRequired,
-//     price: PropTypes.number.isRequired,
-//     image: PropTypes.string.isRequired,
-//     type: PropTypes.string.isRequired,
-//   })).isRequired,
-// };

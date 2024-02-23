@@ -4,11 +4,12 @@ import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { openModal, closeModal } from '../../services/slices/modalSlice';
+import { openModal, closeModal, selectActiveModal } from '../../services/slices/modalSlice';
 
 export default function ListIngredients({ titleIngredient, ingredients }) {
   const dispatch = useDispatch();
   const modalState = useSelector(state => state.modal);
+  const activeModal = useSelector(selectActiveModal);
 
   return (
     <>
@@ -18,12 +19,12 @@ export default function ListIngredients({ titleIngredient, ingredients }) {
           <BurgerIngredient
             key={data._id}
             {...data}
-            onClickIngredient={() => dispatch(openModal({ isOpen: true, title:"Детали ингредиента", content: {...data} }))}
+            onClickIngredient={() => dispatch(openModal({ isOpen: true, title:"Детали ингредиента", content: {...data}, active: 'ingredient' }))}
           />
         ))}
       </ul>
 
-      {modalState.isOpen && (
+      {modalState.isOpen && activeModal === 'ingredient' && (
         <Modal title={modalState.title} onClose={() => dispatch(closeModal())}>
          <IngredientDetails {...modalState.content} />
        </Modal>

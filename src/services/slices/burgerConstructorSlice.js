@@ -1,37 +1,57 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { v4 as uuid } from 'uuid';
+
 
 const sliceName = 'burgerConstructor';
 const initialState = {
-  constructorIngredients: [], // список всех ингредиентов в текущем конструкторе бургера
-  bun: null, // тип ингредиента bun
-  draggedIngredientId: null, // id ингредиента, который сейчас перемещается
+  bun: null,                  // булка
+  constructorIngredients: [], // список всех ингредиентов в текущем конструкторе бургера, кроме булок
+  totalPrice: 0,              // Общая стоимость
 };
 
 export const burgerConstructorSlice = createSlice({
   name: sliceName,
   initialState,
   reducers: {
-    setIngredients: (state, action) => {  // Устанавливает список ингредиентов
-      state.ingredients = action.payload;
+    removeIngredient: (state, action) => {
+      // Находим индекс ингредиента, который нужно удалить
+      const index = state.constructorIngredients.findIndex(ingredient => ingredient.id === action.payload.id);
+    
+      if (index !== -1) {
+        // Вычисляем стоимость удаляемого ингредиента
+        const removedIngredientPrice = state.constructorIngredients[index].price;
+    
+        // Удаляем ингредиент из массива
+        state.constructorIngredients.splice(index, 1);
+    
+        // Вычитаем стоимость удаляемого ингредиента из общей цены
+        state.totalPrice -= removedIngredientPrice;
+      }
     },
-    setBun: (state, action) => {  // Устанавливает булку
-      state.bun = action.payload;
+    addConstructorIngredient: (state, action) => { // Добавление ингредиента в конструктор
+      if (action.payload.type === 'bun') {         //Добавление булок
+        // Удалить предыдущие булки, если они есть
+        state.constructorIngredients = state.constructorIngredients.filter(ingredient => ingredient.type !== 'bun');
+
+        // Добавить новые булки
+        state.totalPrice = action.payload.price * 2; // Перезаписываем цену, так как это новые булки
+        state.bun = action.payload;
+      } else {
+        //Добавление остальных ингредиентов
+        state.totalPrice = state.totalPrice + action.payload.price;
+        state.constructorIngredients.push({...action.payload, id: uuid()});
+      }
     },
-    setDraggedIngredientId: (state, action) => {  // Устанавливает id перетаскиваемого ингредиента
-      state.draggedIngredientId = action.payload;
-    },
-    addIngredient: (state, action) => {  // Добавляет ингредиент в список конструктора
-      state.constructorIngredients.push(action.payload);
-    },
-    removeIngredient: (state, action) => {  // Удаляет ингредиент из списка конструктора
-      state.constructorIngredients = state.constructorIngredients.filter(ingredient => ingredient.id !== action.payload.id);
-    },
-    addConstructorIngredient: (state, action) => { // Добавления ингредиента в конструктор
-      state.constructorIngredients.push(action.payload);
+    ingredientSort(state, action) {
+      state.constructorIngredients.splice(
+        action.payload.to,
+        0,
+        state.constructorIngredients.splice(action.payload.from, 1)[0]
+      );
     },
   },
 });
 
-export const { setIngredients, setBun, setDraggedIngredientId, addIngredient, removeIngredient, addConstructorIngredient } = burgerConstructorSlice.actions;
-
+export const { addIngredient, removeIngredient, addConstructorIngredient, ingredientSort } = burgerConstructorSlice.actions;
+export const selectTotalPrice = state => state.burgerConstructor.totalPrice;
 export default burgerConstructorSlice.reducer;
