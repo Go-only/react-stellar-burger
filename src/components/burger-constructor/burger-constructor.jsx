@@ -4,19 +4,21 @@ import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-de
 import { OrderDetails } from '../order-details/order-details';
 import { Modal } from '../modal/modal';
 import { openModal, closeModal, selectActiveModal } from '../../services/slices/modalSlice';
-import { addConstructorIngredient, selectTotalPrice, removeIngredient } from '../../services/slices/burgerConstructorSlice';
+import { addConstructorIngredient, removeIngredient } from '../../services/slices/burgerConstructorSlice';
 import { selectIngredients } from '../../services/slices/burgerIngredientsSlice';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
+import { fetchOrderResult } from '../../services/slices/orderDetailsSlice';
+
 import styles from './burger-constructor.module.css';
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const modalState = useSelector(state => state.modal);
   const activeModal = useSelector(selectActiveModal);
-  const constructorIngredients = useSelector(state => state.burgerConstructor.constructorIngredients);
+  const ingredients = useSelector(selectIngredients);  // Ингредиенты полученные через API
+  const constructorIngredients = useSelector(state => state.burgerConstructor.constructorIngredients); // Список ингредиентов в конструкторе
   const bun = useSelector(state => state.burgerConstructor.bun);
-  const ingredients = useSelector(selectIngredients);
-  const totalPrice = useSelector(selectTotalPrice);
+  console.log(bun);
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
@@ -33,11 +35,36 @@ export default function BurgerConstructor() {
     const draggedIngredient = ingredients.find(ingredient => ingredient._id === droppedIngredientId._id);
   
     if (draggedIngredient) {
-        dispatch(addConstructorIngredient(draggedIngredient)); // Остальные типы ингредиентов записываем отдельно в массив объектов в хранилище redux
+        dispatch(addConstructorIngredient(draggedIngredient));
     }
 };
 
 const handleDeleteIngredient = (item) => dispatch(removeIngredient(item));
+
+
+function getTotalPrice() {
+  let priceBun = 0;
+  let priceConstructorIngredients = 0;
+
+  if (constructorIngredients.length > 0) {
+    if (bun) {
+      priceBun = bun.price * 2;
+    } 
+
+    priceConstructorIngredients = constructorIngredients.reduce(function (sum, ingredient) {
+      return sum + Number(ingredient.price);
+    }, 0);
+  } else {
+    // Если ингредиенты между булками отсутствуют, то общая стоимость равна стоимости булок
+    if (bun) {
+      priceBun = bun.price * 2;
+    }
+  }
+
+  return priceBun + priceConstructorIngredients;
+}
+
+
 
   return (
     <section className={`${styles.section} mt-25`}>
@@ -87,10 +114,17 @@ const handleDeleteIngredient = (item) => dispatch(removeIngredient(item));
       </div>
       <div className={`${styles.zakaz} mt-10 mr-8`}>
         <div className={`${styles.total}`}>
-          <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
+          <p className="text text_type_digits-medium mr-2">{getTotalPrice()}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={() => dispatch(openModal({ isOpen: true, content: 'Данные заказа', active: 'order' }))}
+        <Button 
+          htmlType="button"
+          type="primary"
+          size="large" 
+          onClick={() => {
+            dispatch(openModal({ isOpen: true, content: 'Данные заказа', active: 'order' }));
+            dispatch(fetchOrderResult({ ingredients: [...constructorIngredients.map((e) => e._id), bun._id] }));
+          }}
           disabled={bun === null && constructorIngredients.length === 0}
         >
           Оформить заказ

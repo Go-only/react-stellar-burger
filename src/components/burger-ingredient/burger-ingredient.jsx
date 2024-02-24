@@ -3,7 +3,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import PropTypes from 'prop-types';
 import { useDrag, DragPreviewImage } from "react-dnd";
 
-export default function BurgerIngredient({_id, image, name, price, onClickIngredient}) {
+export default function BurgerIngredient({_id, image, name, price, onClickIngredient, count}) {
   const itemMargin = "mt-5 ml-4";
   const [{ isDragging }, dragRef, preview] = useDrag({
     type: "ingredient",
@@ -16,7 +16,7 @@ export default function BurgerIngredient({_id, image, name, price, onClickIngred
   return (
     <li className={`${styles.item} ${itemMargin}`} onClick={onClickIngredient} ref={dragRef}>
 
-      {/*count > 0 && <div className={styles.counter}><p className={styles.num}>{count}</p></div>*/}
+      {count > 0 && <div className={styles.counter}><p className={styles.num}>{count}</p></div>}
 
       {/* Обертка для превью изображения при перетаскивании */}
       <DragPreviewImage connect={preview} src={image} />

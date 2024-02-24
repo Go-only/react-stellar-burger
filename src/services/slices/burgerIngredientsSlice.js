@@ -1,3 +1,4 @@
+import { getIngredientsRequest } from "../../utils/api";
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Начальное состояние для среза ингредиентов бургера
@@ -7,7 +8,6 @@ const initialState = {
   error: null // Ошибка (если есть)
 };
 
-const api_url = 'https://norma.nomoreparties.space/api/ingredients';
 const sliceName = 'burgerIngredients';
 
 // Создаем асинхронное действие (thunk) для загрузки ингредиентов
@@ -15,7 +15,7 @@ export const fetchIngredients = createAsyncThunk(
   `${sliceName}/fetchIngredients`,
   async (_, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const response = await fetch(api_url);
+      const response = await getIngredientsRequest();
       if (!response.ok) {
         return rejectWithValue({ message: `Ошибка при загрузке данных: ${response.status}` });
       }

@@ -5,8 +5,7 @@ import { v4 as uuid } from 'uuid';
 const sliceName = 'burgerConstructor';
 const initialState = {
   bun: null,                  // булка
-  constructorIngredients: [], // список всех ингредиентов в текущем конструкторе бургера, кроме булок
-  totalPrice: 0,              // Общая стоимость
+  constructorIngredients: [], // список всех ингредиентов в текущем конструкторе бургера
 };
 
 export const burgerConstructorSlice = createSlice({
@@ -14,32 +13,32 @@ export const burgerConstructorSlice = createSlice({
   initialState,
   reducers: {
     removeIngredient: (state, action) => {
-      // Находим индекс ингредиента, который нужно удалить
-      const index = state.constructorIngredients.findIndex(ingredient => ingredient.id === action.payload.id);
-    
-      if (index !== -1) {
-        // Вычисляем стоимость удаляемого ингредиента
-        const removedIngredientPrice = state.constructorIngredients[index].price;
-    
-        // Удаляем ингредиент из массива
-        state.constructorIngredients.splice(index, 1);
-    
-        // Вычитаем стоимость удаляемого ингредиента из общей цены
-        state.totalPrice -= removedIngredientPrice;
+      const removedIngredient = state.constructorIngredients.find(ingredient => ingredient._id === action.payload._id);
+      if (removedIngredient) {
+        // Если количество ингредиента больше 1, уменьшаем его счетчик на 1
+        if (removedIngredient.count && removedIngredient.count > 1) {
+          removedIngredient.count -= 1;
+        } else {
+          // Если количество ингредиента равно 1 или отсутствует счетчик, удаляем его из конструктора
+          const index = state.constructorIngredients.findIndex(ingredient => ingredient.id === action.payload.id);
+          if (index !== -1) {
+            state.constructorIngredients.splice(index, 1);
+          }
+        }
       }
     },
-    addConstructorIngredient: (state, action) => { // Добавление ингредиента в конструктор
-      if (action.payload.type === 'bun') {         //Добавление булок
-        // Удалить предыдущие булки, если они есть
+    addConstructorIngredient: (state, action) => {
+      if (action.payload.type === 'bun') {
         state.constructorIngredients = state.constructorIngredients.filter(ingredient => ingredient.type !== 'bun');
-
-        // Добавить новые булки
-        state.totalPrice = action.payload.price * 2; // Перезаписываем цену, так как это новые булки
         state.bun = action.payload;
       } else {
-        //Добавление остальных ингредиентов
-        state.totalPrice = state.totalPrice + action.payload.price;
-        state.constructorIngredients.push({...action.payload, id: uuid()});
+        const existingIngredient = state.constructorIngredients.find(ingredient => ingredient._id === action.payload._id);
+        if (existingIngredient) {
+          state.constructorIngredients.push({ ...action.payload, id: uuid() });
+          existingIngredient.count += 1; // Увеличиваем счетчик ингредиента на 1
+        } else {
+          state.constructorIngredients.push({ ...action.payload, id: uuid(), count: 1 });
+        }
       }
     },
     ingredientSort(state, action) {
@@ -53,5 +52,6 @@ export const burgerConstructorSlice = createSlice({
 });
 
 export const { addIngredient, removeIngredient, addConstructorIngredient, ingredientSort } = burgerConstructorSlice.actions;
+export const selectConstructorIngredients = state => state.burgerConstructor.constructorIngredients;
 export const selectTotalPrice = state => state.burgerConstructor.totalPrice;
 export default burgerConstructorSlice.reducer;
