@@ -14,7 +14,7 @@ export default function BurgerIngredients() {
   const [mainRef, mainInView] = useInView();
 
   const dispatch = useDispatch();
-  const { ingredients, loading, error } = useSelector(state => state.burgerIngredients);
+  const { loading, error } = useSelector(state => state.burgerIngredients);
 
   useEffect(() => {
     dispatch(fetchIngredients());
@@ -29,10 +29,6 @@ export default function BurgerIngredients() {
       setCurrent('three');
     }
   }, [bunsInView, saucesInView, mainInView]);
-
-  const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
-  const main = ingredients.filter((ingredient) => ingredient.type === 'main');
-  const sauces = ingredients.filter((ingredient) => ingredient.type === 'sauce');
 
   return (
     <section className={styles.section}>
@@ -57,13 +53,13 @@ export default function BurgerIngredients() {
     ) : (
       <>
         <div ref={bunsRef}>
-          <ListIngredients titleIngredient="Булки" ingredients={buns}   />
+          <ListIngredients titleIngredient="Булки" type="bun" />
         </div>
         <div ref={saucesRef}>
-          <ListIngredients titleIngredient="Соусы" ingredients={sauces} />
+          <ListIngredients titleIngredient="Соусы" type="sauce" />
         </div>
         <div ref={mainRef}>
-          <ListIngredients titleIngredient="Начинки" ingredients={main} />
+          <ListIngredients titleIngredient="Начинки" type="main" />
         </div>
       </>
     )}

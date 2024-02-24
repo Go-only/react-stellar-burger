@@ -15,8 +15,7 @@ const sliceName = 'burgerIngredients';
 export const fetchIngredients = createAsyncThunk(
   `${sliceName}/fetchIngredients`,
   async () => {
-    const response = await getIngredientsRequest();
-    const data = await response.json();
+    const data = await getIngredientsRequest();
     return data.data;
   }
 );

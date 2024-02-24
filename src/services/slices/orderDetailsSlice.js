@@ -12,9 +12,8 @@ const sliceName = 'orderDetails';
 
 export const fetchOrderResult = createAsyncThunk(
   `${sliceName}/fetchOrderResult`,
-  async (ingredients, { rejectWithValue }) => {
-      const response = await createOrderRequest(ingredients);
-      const data = await response.json();
+  async (ingredients) => {
+      const data = await createOrderRequest(ingredients);
       return data;
   }
 );

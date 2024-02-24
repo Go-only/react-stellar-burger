@@ -10,7 +10,7 @@ import styles from './burger-constructor-item.module.css';
   function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
     const ref = useRef(null);
     const dispatch = useDispatch();
-  
+  console.log(item);
     const [{ isDragging }, drag] = useDrag({
       type: "sortItem",
       item: () => {
