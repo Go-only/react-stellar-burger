@@ -38,4 +38,5 @@ BurgerIngredient.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   onClickIngredient: PropTypes.func.isRequired,
+  count: PropTypes.number.isRequired,
 };

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from "prop-types";
 import { useDrop } from 'react-dnd';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { OrderDetails } from '../order-details/order-details';
@@ -137,3 +138,9 @@ function getTotalPrice() {
     </section>
   );
 }
+
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.array.isRequired,
+  constructorIngredients: PropTypes.array.isRequired,
+  bun: PropTypes.object,
+};

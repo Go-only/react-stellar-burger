@@ -3,8 +3,6 @@ import { useInView } from "react-intersection-observer";
 import styles from "./burger-ingredients.module.css";
 import ListIngredients from "../list-ingredients/list-ingredients";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-// import PropTypes from 'prop-types';
-// import { ingredientType } from '../../utils/prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchIngredients } from "../../services/slices/burgerIngredientsSlice";
 
@@ -74,7 +72,3 @@ export default function BurgerIngredients() {
     </section>
   );
 }
-
-// BurgerIngredients.propTypes = {
-//   ingredients: PropTypes.arrayOf(ingredientType).isRequired,
-// };

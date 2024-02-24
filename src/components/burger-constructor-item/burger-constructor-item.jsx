@@ -95,6 +95,12 @@ import styles from './burger-constructor-item.module.css';
   }
   
   BurgerConstructorItem.propTypes = {
+    item: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    }).isRequired,
     index: PropTypes.number.isRequired,
     handleDeleteIngredient: PropTypes.func,
   };
