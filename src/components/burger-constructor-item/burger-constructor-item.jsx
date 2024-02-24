@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import PropTypes from "prop-types";
+import { ingredientType } from "../../utils/prop-types";
 import styles from './burger-constructor-item.module.css';
   
   function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
@@ -95,12 +96,7 @@ import styles from './burger-constructor-item.module.css';
   }
   
   BurgerConstructorItem.propTypes = {
-    item: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-    }).isRequired,
+    item: PropTypes.shape(ingredientType).isRequired,
     index: PropTypes.number.isRequired,
     handleDeleteIngredient: PropTypes.func,
   };

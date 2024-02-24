@@ -11,19 +11,13 @@ const initialState = {
 const sliceName = 'burgerIngredients';
 
 // Создаем асинхронное действие (thunk) для загрузки ингредиентов
+
 export const fetchIngredients = createAsyncThunk(
   `${sliceName}/fetchIngredients`,
-  async (_, { rejectWithValue, fulfillWithValue }) => {
-    try {
-      const response = await getIngredientsRequest();
-      if (!response.ok) {
-        return rejectWithValue({ message: `Ошибка при загрузке данных: ${response.status}` });
-      }
-      const data = await response.json();
-      return fulfillWithValue(data.data);
-    } catch (error) {
-      return rejectWithValue({ message: `Ошибка при загрузке данных: ${error.message}` });
-    }
+  async () => {
+    const response = await getIngredientsRequest();
+    const data = await response.json();
+    return data.data;
   }
 );
 

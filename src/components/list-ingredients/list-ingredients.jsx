@@ -3,6 +3,7 @@ import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import PropTypes from 'prop-types';
+import { ingredientType } from "../../utils/prop-types";
 import { useSelector, useDispatch } from 'react-redux';
 import { selectConstructorIngredients, selectBun } from '../../services/slices/burgerConstructorSlice';
 import { openModal, closeModal, selectActiveModal } from '../../services/slices/modalSlice';
@@ -20,6 +21,7 @@ export default function ListIngredients({ titleIngredient, ingredients }) {
   return (
     <>
       <h2 className="text text_type_main-medium mt-10 mb-6">{titleIngredient}</h2>
+      {ingredients && ingredients.length > 0 && (
       <ul className={styles.ingredients_item}>
         {ingredients.map(data => (
           <BurgerIngredient
@@ -30,6 +32,7 @@ export default function ListIngredients({ titleIngredient, ingredients }) {
           />
         ))}
       </ul>
+      )}
 
       {modalState.isOpen && activeModal === 'ingredient' && (
         <Modal title={modalState.title} onClose={() => dispatch(closeModal())}>
@@ -43,9 +46,5 @@ export default function ListIngredients({ titleIngredient, ingredients }) {
 
 ListIngredients.propTypes = {
   titleIngredient: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.shape(ingredientType)).isRequired,
 };

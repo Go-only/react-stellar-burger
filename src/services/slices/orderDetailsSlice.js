@@ -11,23 +11,13 @@ const initialState = {
 const sliceName = 'orderDetails';
 
 export const fetchOrderResult = createAsyncThunk(
-    `${sliceName}/fetchOrderResult`,
-    async (ingredients, { rejectWithValue, fulfillWithValue }) => {
-      try {
-        // Вместо fetch вызываем createOrderRequest и передаем ему ингредиенты
-        const response = await createOrderRequest(ingredients);
-  
-        if (!response.ok) {
-          return rejectWithValue({ message: `Ошибка при загрузке данных: ${response.status}` });
-        }
-  
-        const data = await response.json();
-        return fulfillWithValue(data);
-      } catch (error) {
-        return rejectWithValue({ message: `Ошибка при загрузке данных: ${error.message}` });
-      }
-    }
-  );
+  `${sliceName}/fetchOrderResult`,
+  async (ingredients, { rejectWithValue }) => {
+      const response = await createOrderRequest(ingredients);
+      const data = await response.json();
+      return data;
+  }
+);
 
 export const orderDetailsSlice = createSlice({
   name: sliceName,
