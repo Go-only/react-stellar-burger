@@ -4,8 +4,9 @@ import { Modal } from "../modal/modal";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectConstructorIngredients } from '../../services/slices/burgerConstructorSlice';
+import { selectConstructorIngredients, selectBun } from '../../services/slices/burgerConstructorSlice';
 import { openModal, closeModal, selectActiveModal } from '../../services/slices/modalSlice';
+
 
 export default function ListIngredients({ titleIngredient, ingredients }) {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ export default function ListIngredients({ titleIngredient, ingredients }) {
   const activeModal = useSelector(selectActiveModal);
 
   const constructorIngredients = useSelector(selectConstructorIngredients);
+  const bunIngredients = useSelector(selectBun);
 
 
   return (
@@ -24,7 +26,7 @@ export default function ListIngredients({ titleIngredient, ingredients }) {
             key={data._id}
             {...data}
             onClickIngredient={() => dispatch(openModal({ isOpen: true, title:"Детали ингредиента", content: {...data}, active: 'ingredient' }))}
-            count={(constructorIngredients.find(ingredient => ingredient._id === data._id) || {}).count || 0} // Передача количества
+            count={(titleIngredient === "Булки" && bunIngredients && bunIngredients._id === data._id ? 2 : constructorIngredients.filter(ingredient => ingredient._id === data._id).length)} // Передача количества
           />
         ))}
       </ul>

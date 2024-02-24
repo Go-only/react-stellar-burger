@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 import styles from "./burger-ingredients.module.css";
 import ListIngredients from "../list-ingredients/list-ingredients";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 // import PropTypes from 'prop-types';
 // import { ingredientType } from '../../utils/prop-types';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchIngredients } from "../../services/slices/burgerIngredientsSlice";
 
 export default function BurgerIngredients() {
   
   const [current, setCurrent] = useState('one');
+  const [bunsRef, bunsInView] = useInView();
+  const [saucesRef, saucesInView] = useInView();
+  const [mainRef, mainInView] = useInView();
 
   const dispatch = useDispatch();
   const { ingredients, loading, error } = useSelector(state => state.burgerIngredients);
@@ -19,8 +22,18 @@ export default function BurgerIngredients() {
     dispatch(fetchIngredients());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (bunsInView) {
+      setCurrent('one');
+    } else if (saucesInView) {
+      setCurrent('two');
+    } else if (mainInView) {
+      setCurrent('three');
+    }
+  }, [bunsInView, saucesInView, mainInView]);
+
   const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
-  const main = ingredients.filter((ingredient) => ingredient.type == 'main');
+  const main = ingredients.filter((ingredient) => ingredient.type === 'main');
   const sauces = ingredients.filter((ingredient) => ingredient.type === 'sauce');
 
   return (
@@ -45,9 +58,15 @@ export default function BurgerIngredients() {
       <p className={styles.loading}>{loading ? 'Идет загрузка ингредиентов' : `Произошла ошибка: ${error}`}</p>
     ) : (
       <>
-        <ListIngredients titleIngredient="Булки" ingredients={buns} />
-        <ListIngredients titleIngredient="Соусы" ingredients={sauces} />
-        <ListIngredients titleIngredient="Начинки" ingredients={main} />
+        <div ref={bunsRef}>
+          <ListIngredients titleIngredient="Булки" ingredients={buns}   />
+        </div>
+        <div ref={saucesRef}>
+          <ListIngredients titleIngredient="Соусы" ingredients={sauces} />
+        </div>
+        <div ref={mainRef}>
+          <ListIngredients titleIngredient="Начинки" ingredients={main} />
+        </div>
       </>
     )}
 

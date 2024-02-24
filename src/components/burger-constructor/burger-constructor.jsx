@@ -18,7 +18,6 @@ export default function BurgerConstructor() {
   const ingredients = useSelector(selectIngredients);  // Ингредиенты полученные через API
   const constructorIngredients = useSelector(state => state.burgerConstructor.constructorIngredients); // Список ингредиентов в конструкторе
   const bun = useSelector(state => state.burgerConstructor.bun);
-  console.log(bun);
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
