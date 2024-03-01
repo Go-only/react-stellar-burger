@@ -1,6 +1,12 @@
 .section {
     width: 600px;
 }
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 58vh;
+}
 
 .list {
     display: flex;
@@ -10,12 +16,6 @@
     padding: 0;
     overflow-y: scroll;
     margin: 4px 0;
-}
-
-.item {
-    display: flex;
-    align-items: center;
-    column-gap: 8px;
 }
 
 .zakaz {
@@ -33,4 +33,13 @@
 .total svg {
     width: 36px;
     height: 36px;
+}
+
+.title {
+    text-align: center;
+    font-size: 30px;
+}
+
+.element {
+    flex-grow: inherit;
 }

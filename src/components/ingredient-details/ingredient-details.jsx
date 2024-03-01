@@ -5,7 +5,6 @@ export const IngredientDetails = ({ calories, carbohydrates, fat, image, name, p
   const default_text = "text text_type_digits-default"
 
   return (
-    <>
       <div className={`${styles.container} pl-25 pr-25 pb-15`}>
         <img className={styles.img} src={image} alt={name} />
         <h3 className="text_type_main-medium mt-4 mb-8">{name}</h3>
@@ -28,7 +27,6 @@ export const IngredientDetails = ({ calories, carbohydrates, fat, image, name, p
           </li>
         </ul>
       </div>
-    </>
   );
 }
 
