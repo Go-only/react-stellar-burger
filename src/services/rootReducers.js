@@ -3,10 +3,12 @@ import burgerIngredientsReducer, { burgerIngredientsSlice } from './slices/burge
 import burgerConstructorReducer, { burgerConstructorSlice } from './slices/burgerConstructorSlice';
 import orderDetailsReducer, { orderDetailsSlice } from './slices/orderDetailsSlice';
 import modalReducer, { modalSlice } from './slices/modalSlice';
+import userReducer, { userSlice } from './slices/user/userSlice';
 
 export const rootReducer = combineReducers({
   [burgerIngredientsSlice.name]: burgerIngredientsReducer,
   [burgerConstructorSlice.name]: burgerConstructorReducer,
   [orderDetailsSlice.name]: orderDetailsReducer,
   [modalSlice.name]: modalReducer,
+  [userSlice.name]: userReducer,
 });
