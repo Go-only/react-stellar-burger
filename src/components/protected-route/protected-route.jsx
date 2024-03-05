@@ -4,23 +4,28 @@ import { getIsAuthChecked, getUser } from "../../services/slices/user/selector";
 
 function ProtectedRoute({ children, onlyUnAuth }) {
   const location = useLocation();
-  const user = useSelector(getUser);
+  // const user = useSelector(getUser);
+  const user = useSelector((state) => state.user.data);
   const isAuthChecked = useSelector(getIsAuthChecked);
+  console.log("проверка существования юзера в стейте");
+  console.log(user);
+  console.log(isAuthChecked);
 
   if (!isAuthChecked) {
-    console.log("WAIT USER CHECKOUT");
-    return "Загрузка";
+    console.log("проверка аутентификации");
   }
 
   if (onlyUnAuth && user) {
-    console.log("NAVIGATE FRON LOGIN TO INDEX");
-    return <Redirect to={"/"} />;
+    console.log("NAVIGATE FROM LOGIN TO INDEX");
+    const from = location.state?.from || { pathname: "/" };
+    return <Redirect replace to={from} />;
   }
 
   if (!onlyUnAuth && !user) {
-    console.log("NAVIGATE FRON PAGE TO LOGIN");
-    return <Redirect to={"/login"} />;
+    console.log("NAVIGATE FROM PAGE TO LOGIN");
+    return <Redirect replace to={"/login"} state={{ from: location }} />;
   }
+
   console.log("RENDER COMPONENT");
   return children;
 }

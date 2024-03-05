@@ -1,5 +1,14 @@
-import store from "../..";
-import { userSlice } from "./UserSlice";
+import { createSelector } from "@reduxjs/toolkit";
+import { userSlice } from "./userSlice";
 
-export const getUser = store[userSlice.name].data;
-export const getIsAuthChecked = store[userSlice.name].isAuthChecked;
+// Селектор для получения данных пользователя
+export const getUser = createSelector(
+  (state) => state[userSlice.name].data,
+  (data) => data
+);
+
+// Селектор для проверки состояния аутентификации
+export const getIsAuthChecked = createSelector(
+  (state) => state[userSlice.name].IsAuthChecked,
+  (isAuthChecked) => isAuthChecked
+);

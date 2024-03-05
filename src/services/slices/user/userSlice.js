@@ -5,9 +5,10 @@ import {
   isActionPending,
   isActionRejected,
 } from "../../../utils/redux";
+import { deleteCookie, setCookie } from "../../../utils/cookies";
 
 const initialState = {
-  IsAuthChecked: false,
+  IsAuthChecked: false, // факт проверки аутентификации пользователя (прошла ли уже эта проверка или нет)
   data: null,
 
   registerUserError: null,
@@ -24,25 +25,68 @@ export const sliceName = "user";
 
 export const checkUserAuth = createAsyncThunk(
   `${sliceName}/checkUserAuth`,
-  async () => {
-    const data = await getUser();
-    return data.data;
+  async (_, { dispatch }) => {
+    try {
+      const data = await getUser();
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    } finally {
+      dispatch(authCheck());
+    }
   }
 );
 
 export const registerUser = createAsyncThunk(
-  `${sliceName}/checkUserAuth`,
-  async () => {
-    const data = await getRegisterUser();
-    return data.data;
+  `${sliceName}/registerUser`,
+  async (dataUser) => {
+    const data = await getRegisterUser(dataUser);
+    setCookie("accessToken", data.accessToken);
+    setCookie("refreshToken", data.refreshToken);
+    return data;
   }
 );
 
 export const loginUser = createAsyncThunk(
-  `${sliceName}/checkUserAuth`,
+  `${sliceName}/loginUser`,
+  async (dataUser) => {
+    const data = await getLoginUser(dataUser);
+    setCookie("accessToken", data.accessToken);
+    setCookie("refreshToken", data.refreshToken);
+    return data;
+  }
+);
+
+export const logoutUser = createAsyncThunk(
+  `${sliceName}/logoutUser`,
   async () => {
-    const data = await getLoginUser();
-    return data.data;
+    await logoutUser();
+    deleteCookie("accessToken");
+    deleteCookie("refreshToken");
+  }
+);
+
+export const forgotPassword = createAsyncThunk(
+  `${sliceName}/forgotPassword`,
+  async (email) => {
+    const data = await forgotPassword(email);
+    return data;
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  `${sliceName}/resetPassword`,
+  async (data) => {
+    const response = await resetPassword(data);
+    return response;
+  }
+);
+
+export const updateUserInfo = createAsyncThunk(
+  `${sliceName}/updateUserInfo`,
+  async (data) => {
+    const response = await updateUserInfo(data);
+    return response;
   }
 );
 
@@ -74,7 +118,7 @@ export const userSlice = createSlice({
       })
       .addMatcher(isActionRejected(userSlice.name), (state, action) => {
         state[`${getActionName(action.type)}Request`] = action.payload;
-        state[`${getActionName(action.type)}Error`] = false;
+        state[`${getActionName(action.type)}Error`] = action.error.message;
       });
   },
 });

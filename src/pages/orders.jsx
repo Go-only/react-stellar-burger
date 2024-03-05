@@ -9,7 +9,12 @@ import {
 export function OrdersPage() {
   return (
     <section className={styles.wrap}>
-      <ProfileMenu activeTab={"orderHistory"} />
+      <div className={styles.text}>
+        <ProfileMenu activeTab={"orderHistory"} />
+        <p className="text text_type_main-default text_color_inactive mt-20">
+          В этом разделе вы можете изменить свои персональные данные
+        </p>
+      </div>
     </section>
   );
 }

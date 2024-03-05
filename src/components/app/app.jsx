@@ -2,7 +2,7 @@ import styles from "./app.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import AppHeader from "../app-header/app-header";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { LoginPage } from "../../pages/login";
 import { RegisterPage } from "../../pages/register";
 import { ForgotPage } from "../../pages/forgot-password";
@@ -12,9 +12,11 @@ import { OrdersPage } from "../../pages/orders";
 import ProtectedRoute from "../protected-route/protected-route";
 import { useDispatch } from "react-redux";
 import { getLoginUser, getRegisterUser } from "../../utils/api";
+import { useEffect } from "react";
+import { checkUserAuth } from "../../services/slices/user/userSlice";
 
 function App() {
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
 
   const clbLogin = (dataUser) => {
     dispatch(getLoginUser(dataUser));
@@ -24,48 +26,58 @@ function App() {
     dispatch(getRegisterUser(dataUser));
   };
 
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  }, [dispatch]);
+
   return (
-    <Router>
-      <div className={styles.app}>
-        <AppHeader />
-        <main className={styles.main}>
-          <Switch>
-            <Route path="/login">
-              <ProtectedRoute onlyUnAuth>
-                <LoginPage onLogin={clbLogin} />
-              </ProtectedRoute>
-            </Route>
+    <div className={styles.app}>
+      <AppHeader />
+      <main className={styles.main}>
+        <Switch>
+          <Route path="/login">
+            <ProtectedRoute onlyUnAuth>
+              <LoginPage onLogin={clbLogin} />
+            </ProtectedRoute>
+          </Route>
 
-            <Route path="/register">
-              <ProtectedRoute onlyUnAuth>
-                <RegisterPage onRegister={clbRegister} />
-              </ProtectedRoute>
-            </Route>
+          <Route path="/register">
+            <ProtectedRoute onlyUnAuth>
+              <RegisterPage onRegister={clbRegister} />
+            </ProtectedRoute>
+          </Route>
 
-            <Route path="/forgot-password">
+          <Route path="/forgot-password">
+            <ProtectedRoute onlyUnAuth>
               <ForgotPage />
-            </Route>
+            </ProtectedRoute>
+          </Route>
 
-            <Route path="/reset-password">
+          <Route path="/reset-password">
+            <ProtectedRoute onlyUnAuth>
               <ResetPage />
-            </Route>
+            </ProtectedRoute>
+          </Route>
 
-            <Route path="/profile" exact={true}>
+          <Route path="/profile" exact={true}>
+            <ProtectedRoute>
               <ProfilePage />
-            </Route>
+            </ProtectedRoute>
+          </Route>
 
-            <Route path="/profile/orders" exact={true}>
+          <Route path="/profile/orders" exact={true}>
+            <ProtectedRoute>
               <OrdersPage />
-            </Route>
+            </ProtectedRoute>
+          </Route>
 
-            <Route path="/">
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </Route>
-          </Switch>
-        </main>
-      </div>
-    </Router>
+          <Route path="/">
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </Route>
+        </Switch>
+      </main>
+    </div>
   );
 }
 

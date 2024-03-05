@@ -7,7 +7,7 @@ function isRejected(action) {
 }
 
 function isSliceName(sliceName, action) {
-  return action.type.startWith(sliceName);
+  return action.type.startsWith(sliceName);
 }
 
 export function isActionPending(sliceName) {
