@@ -2,7 +2,7 @@ import styles from "./app.module.css";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import AppHeader from "../app-header/app-header";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 import { LoginPage } from "../../pages/login";
 import { RegisterPage } from "../../pages/register";
 import { ForgotPage } from "../../pages/forgot-password";
@@ -17,6 +17,8 @@ import { checkUserAuth } from "../../services/slices/user/userSlice";
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  // console.log(location);
 
   const clbLogin = (dataUser) => {
     dispatch(getLoginUser(dataUser));
@@ -34,7 +36,7 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       <main className={styles.main}>
-        <Switch>
+        <Switch location={location}>
           <Route path="/login">
             <ProtectedRoute onlyUnAuth>
               <LoginPage onLogin={clbLogin} />
