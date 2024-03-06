@@ -22,13 +22,14 @@ function ProtectedRoute({ children, onlyUnAuth }) {
   if (onlyUnAuth && user) {
     console.log("NAVIGATE FROM LOGIN TO INDEX");
     const from = location.state?.from || { pathname: "/" };
-    console.log(from);
     return <Redirect replace to={from} />;
   }
 
   if (!onlyUnAuth && !user) {
     console.log("NAVIGATE FROM PAGE TO LOGIN");
-    return <Redirect replace to={"/login"} state={{ from: location }} />;
+    console.log("!onlyUnAuth && !user:");
+    console.log(location);
+    return <Redirect to={{ pathname: "/login", state: { from: location } }} />;
   }
 
   console.log("RENDER COMPONENT");

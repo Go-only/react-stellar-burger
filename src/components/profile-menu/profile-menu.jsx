@@ -2,14 +2,13 @@ import { useState } from "react";
 import styles from "./profile-menu.module.css";
 import ProfileTab from "../profile-tab/profile-tab";
 import { useHistory } from "react-router-dom";
-// import { logOutThunk } from "../../services/actions/userActions";
-
-// import { useAppDispatch } from "../../services/hooks";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../services/slices/user/userSlice";
 
 export const ProfileMenu = ({ activeTab }) => {
+  const dispatch = useDispatch();
   const [currentTab] = useState(activeTab);
   const history = useHistory();
-  //   const dispatch = useAppDispatch();
 
   const handleTabClick = (value) => {
     if (value === "profile") {
@@ -20,9 +19,10 @@ export const ProfileMenu = ({ activeTab }) => {
       history.replace({ pathname: "/profile/orders" });
     }
 
-    // if (value === "logOut") {
-    //   dispatch(logOutThunk());
-    // }
+    if (value === "logOut") {
+      dispatch(logoutUser());
+      history.push("/");
+    }
   };
 
   return (
@@ -44,10 +44,6 @@ export const ProfileMenu = ({ activeTab }) => {
       <ProfileTab value="logOut" isActive={false} onClick={handleTabClick}>
         Выход
       </ProfileTab>
-
-      <p className="text text_type_main-default text_color_inactive mt-20">
-        В этом разделе вы можете изменить свои персональные данные
-      </p>
     </nav>
   );
 };

@@ -15,12 +15,16 @@ export function ProfilePage() {
 
   const dispatch = useDispatch();
 
-  // const userData = useSelector((state) => state.user.data);
-  // console.log(userData);
+  const userData = useSelector((state) => state.user.data);
+  console.log(userData);
 
-  // useEffect(() => {
-  //   setFormValues({ ...form, name: userData.name, email: userData.email });
-  // }, []);
+  useEffect(() => {
+    setFormValues({
+      ...form,
+      name: userData.user.name,
+      email: userData.user.email,
+    });
+  }, []);
 
   const handleChange = (e) => {
     setFormValues({ ...form, [e.target.name]: e.target.value });
@@ -32,10 +36,14 @@ export function ProfilePage() {
     dispatch(checkUserAuth());
   };
 
-  // const handleCancel = (e) => {
-  //   e.preventDefault();
-  //   setFormValues({ name: userData.name, email: userData.email, password: "" });
-  // };
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setFormValues({
+      name: userData.user.name,
+      email: userData.user.email,
+      password: "",
+    });
+  };
 
   return (
     <section className={styles.wrap}>
@@ -81,9 +89,9 @@ export function ProfilePage() {
         />
         <div className={styles.buttonWrap}>
           <Button htmlType="submit">Сохранить</Button>
-          {/* <Button onClick={handleCancel} htmlType="button" type="secondary"> */}
-          Отмена
-          {/* </Button> */}
+          <Button onClick={handleCancel} htmlType="button" type="secondary">
+            Отмена
+          </Button>
         </div>
       </form>
     </section>
