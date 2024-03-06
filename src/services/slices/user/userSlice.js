@@ -1,4 +1,12 @@
-import { getUser, getLoginUser, getRegisterUser } from "../../../utils/api";
+import {
+  getUser,
+  getLoginUser,
+  getRegisterUser,
+  updateUserProfile,
+  logoutUserApi,
+  forgotPasswordApi,
+  resetPasswordApi,
+} from "../../../utils/api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getActionName,
@@ -60,7 +68,7 @@ export const loginUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   `${sliceName}/logoutUser`,
   async () => {
-    await logoutUser();
+    await logoutUserApi();
     deleteCookie("accessToken");
     deleteCookie("refreshToken");
   }
@@ -69,7 +77,7 @@ export const logoutUser = createAsyncThunk(
 export const forgotPassword = createAsyncThunk(
   `${sliceName}/forgotPassword`,
   async (email) => {
-    const data = await forgotPassword(email);
+    const data = await forgotPasswordApi(email);
     return data;
   }
 );
@@ -77,7 +85,7 @@ export const forgotPassword = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
   `${sliceName}/resetPassword`,
   async (data) => {
-    const response = await resetPassword(data);
+    const response = await resetPasswordApi(data);
     return response;
   }
 );
@@ -85,7 +93,7 @@ export const resetPassword = createAsyncThunk(
 export const updateUserInfo = createAsyncThunk(
   `${sliceName}/updateUserInfo`,
   async (data) => {
-    const response = await updateUserInfo(data);
+    const response = await updateUserProfile(data);
     return response;
   }
 );
@@ -111,6 +119,12 @@ export const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.data = action.payload;
         state.loginUserRequest = false;
+      })
+      .addCase(updateUserInfo.fulfilled, (state, action) => {
+        state.data = action.payload;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.data = null;
       })
       .addMatcher(isActionPending(userSlice.name), (state, action) => {
         state[`${getActionName(action.type)}Request`] = true;

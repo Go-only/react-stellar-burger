@@ -7,8 +7,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { checkUserAuth } from "../services/slices/user/userSlice";
-import { updateUserProfile } from "../utils/api";
+import {
+  checkUserAuth,
+  updateUserInfo,
+} from "../services/slices/user/userSlice";
 
 export function ProfilePage() {
   const [form, setFormValues] = useState({ name: "", email: "", password: "" });
@@ -32,7 +34,7 @@ export function ProfilePage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUserProfile(form));
+    dispatch(updateUserInfo(form));
     dispatch(checkUserAuth());
   };
 

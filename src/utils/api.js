@@ -116,7 +116,7 @@ function getUser() {
   });
 }
 
-function forgotPassword(email) {
+function forgotPasswordApi(email) {
   return request("/password-reset", {
     method: "POST",
     headers: {
@@ -126,7 +126,7 @@ function forgotPassword(email) {
   });
 }
 
-function resetPassword(data) {
+function resetPasswordApi(data) {
   return request("/password-reset/reset", {
     method: "POST",
     headers: {
@@ -152,7 +152,7 @@ function updateUserProfile(data) {
   });
 }
 
-function logoutUser() {
+function logoutUserApi() {
   return request("/auth/logout", {
     method: "POST",
     headers: {
@@ -170,8 +170,8 @@ export {
   getRegisterUser,
   refreshToken,
   requestWithRefresh,
-  forgotPassword,
-  resetPassword,
+  forgotPasswordApi,
+  resetPasswordApi,
   updateUserProfile,
-  logoutUser,
+  logoutUserApi,
 };

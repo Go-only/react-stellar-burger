@@ -1,35 +1,67 @@
 import styles from "./auth.module.css";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import {
   Input,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { resetPassword } from "../services/slices/user/userSlice";
 
 export function ResetPage() {
+  const [form, setFormValues] = useState({ password: "", resetCode: "" });
+  const [redirectToResetPassword, setRedirectToResetPassword] = useState(false);
+  const location = useLocation();
+  const [redirectToForgotPassword, setRedirectToForgotPassword] =
+    useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!location.state?.fromForgotPassword) {
+      setRedirectToForgotPassword(true);
+    }
+  }, [location]);
+
+  if (redirectToForgotPassword) {
+    return <Redirect to="/forgot-password" />;
+  }
+
+  const handleChange = (e) => {
+    setFormValues({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(resetPassword(form));
+    setRedirectToResetPassword(true);
+  };
+
+  if (redirectToResetPassword) {
+    return <Redirect to="/login" />;
+  }
+
   return (
     <div className={styles.wrap}>
-      {/* <form className={styles.form} onSubmit={handleSubmit}> */}
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <h1 className="text text_type_main-medium mb-6">
           Восстановление пароля
         </h1>
 
         <PasswordInput
-          //   value={form.password}
+          value={form.password}
           name={"password"}
           size={"default"}
-          //   onChange={handleChange}
+          onChange={handleChange}
           extraClass={styles.input}
         />
 
         <Input
           type="text"
           placeholder="Введите код из письма"
-          //   value={form.resetCode}
+          value={form.resetCode}
           name={"resetCode"}
-          //   onChange={handleChange}
-
+          onChange={handleChange}
           error={false}
           errorText={""}
           extraClass={styles.input}
