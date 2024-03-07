@@ -1,17 +1,18 @@
 import styles from "./auth.module.css";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { forgotPassword } from "../services/slices/user/userSlice";
+import { forgotPassword } from "../services/slices/userSlice";
 
 export function ForgotPage() {
   const [form, setFormValues] = useState({ email: "" });
-  const [redirectToResetPassword, setRedirectToResetPassword] = useState(false);
+  // const [redirectToResetPassword, setRedirectToResetPassword] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormValues({ ...form, [e.target.name]: e.target.value });
@@ -20,19 +21,20 @@ export function ForgotPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(forgotPassword(form.email));
-    setRedirectToResetPassword(true);
+    // setRedirectToResetPassword(true);
+    navigate("/reset-password", { state: { fromForgotPassword: true } });
   };
 
-  if (redirectToResetPassword) {
-    return (
-      <Navigate
-        to={{
-          pathname: "/reset-password",
-          state: { fromForgotPassword: true },
-        }}
-      />
-    );
-  }
+  // if (redirectToResetPassword) {
+  //   return (
+  //     <Navigate
+  //       to={{
+  //         pathname: "/reset-password",
+  //         state: { fromForgotPassword: true },
+  //       }}
+  //     />
+  //   );
+  // }
 
   return (
     <div className={styles.wrap}>

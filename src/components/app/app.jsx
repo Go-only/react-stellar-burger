@@ -11,7 +11,7 @@ import ProtectedRoute from "../protected-route/protected-route";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoginUser, getRegisterUser } from "../../utils/api";
 import { useEffect } from "react";
-import { checkUserAuth } from "../../services/slices/user/userSlice";
+import { checkUserAuth } from "../../services/slices/userSlice";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import { IngredientPage } from "../../pages/ingredient-page";
 import { Modal } from "../modal/modal";
@@ -28,7 +28,6 @@ function App() {
   const ingredients = useSelector(selectIngredients);
   let navigate = useNavigate();
   let state = location.state;
-  // console.log(ingredients);
 
   const closeModal = () => {
     navigate(-1);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../services/slices/user/userSlice";
+import { registerUser } from "../services/slices/userSlice";
 import {
   Input,
   PasswordInput,

@@ -1,8 +1,9 @@
 import { useSelector } from "react-redux";
 import { useLocation, Navigate } from "react-router-dom";
-import { getIsAuthChecked } from "../../services/slices/user/selector";
+import { getIsAuthChecked } from "../../utils/selector";
 import { SpinnerCircular } from "spinners-react";
 import styles from "./protected-route.module.css";
+import PropTypes from 'prop-types';
 
 function ProtectedRoute({ children, onlyUnAuth }) {
   const location = useLocation();
@@ -33,5 +34,10 @@ function ProtectedRoute({ children, onlyUnAuth }) {
   console.log("RENDER COMPONENT");
   return children;
 }
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+  onlyUnAuth: PropTypes.bool
+};
 
 export default ProtectedRoute;

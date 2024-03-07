@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { resetPassword } from "../services/slices/user/userSlice";
+import { resetPassword } from "../services/slices/userSlice";
 
 export function ResetPage() {
   const [form, setFormValues] = useState({ password: "", token: "" });
@@ -33,7 +33,6 @@ export function ResetPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
     dispatch(resetPassword(form));
     setRedirectToResetPassword(true);
   };

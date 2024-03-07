@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import {
   checkUserAuth,
   updateUserInfo,
-} from "../services/slices/user/userSlice";
+} from "../services/slices/userSlice";
 
 export function ProfilePage() {
   const [form, setFormValues] = useState({ name: "", email: "", password: "" });

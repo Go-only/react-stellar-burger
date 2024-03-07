@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import styles from "./profile-tab.module.css";
+import PropTypes from 'prop-types';
 
 const ProfileTab = ({ children, value, isActive, onClick: handleClick }) => {
   const className = `${styles.tab} ${isActive ? styles.tab_type_current : ""}`;
 
   const onClick = useCallback(() => {
-    console.log(isActive);
     if (typeof handleClick === "function" && !isActive) {
       handleClick(value);
     }
@@ -18,4 +18,13 @@ const ProfileTab = ({ children, value, isActive, onClick: handleClick }) => {
   );
 };
 
+ProfileTab.propTypes = {
+  children: PropTypes.node.isRequired,
+  value: PropTypes.any.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  onClick: PropTypes.func
+};
+
 export default ProfileTab;
+
+

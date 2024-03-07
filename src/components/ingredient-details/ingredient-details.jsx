@@ -5,15 +5,12 @@ import { selectIngredients } from "../../services/slices/burgerIngredientsSlice"
 
 export const IngredientDetails = () => {
   const { id } = useParams();
-  console.log(id);
   const ingredients = useSelector(selectIngredients);
-  console.log(ingredients);
   const ingredient = ingredients.find((item) => item._id === id);
 
   const default_text = "text text_type_digits-default";
 
   if (!ingredient) {
-    console.log("нет ингредиента");
     return null;
   }
 

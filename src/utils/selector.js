@@ -1,5 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { userSlice } from "./userSlice";
+import { userSlice } from "../services/slices/userSlice";
 
 // Селектор для проверки состояния аутентификации
 export const getIsAuthChecked = createSelector(

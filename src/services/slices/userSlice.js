@@ -6,14 +6,14 @@ import {
   logoutUserApi,
   forgotPasswordApi,
   resetPasswordApi,
-} from "../../../utils/api";
+} from "../../utils/api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getActionName,
   isActionPending,
   isActionRejected,
-} from "../../../utils/redux";
-import { deleteCookie, setCookie } from "../../../utils/cookies";
+} from "../../utils/redux";
+import { deleteCookie, setCookie } from "../../utils/cookies";
 
 const initialState = {
   IsAuthChecked: false, // факт проверки аутентификации пользователя (прошла ли уже эта проверка или нет)
@@ -86,7 +86,6 @@ export const resetPassword = createAsyncThunk(
   `${sliceName}/resetPassword`,
   async (data) => {
     const response = await resetPasswordApi(data);
-    console.log(data);
     return response;
   }
 );

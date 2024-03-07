@@ -3,7 +3,8 @@ import styles from "./profile-menu.module.css";
 import ProfileTab from "../profile-tab/profile-tab";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../services/slices/user/userSlice";
+import { logoutUser } from "../../services/slices/userSlice";
+import PropTypes from 'prop-types';
 
 export const ProfileMenu = ({ activeTab }) => {
   const dispatch = useDispatch();
@@ -46,4 +47,8 @@ export const ProfileMenu = ({ activeTab }) => {
       </ProfileTab>
     </nav>
   );
+};
+
+ProfileMenu.propTypes = {
+  activeTab: PropTypes.string.isRequired
 };
