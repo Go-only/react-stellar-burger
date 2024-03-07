@@ -14,9 +14,8 @@ import {
 
 export function ProfilePage() {
   const [form, setFormValues] = useState({ name: "", email: "", password: "" });
-
+  const [isFormChanged, setIsFormChanged] = useState(false);
   const dispatch = useDispatch();
-
   const userData = useSelector((state) => state.user.data);
 
   useEffect(() => {
@@ -29,12 +28,14 @@ export function ProfilePage() {
 
   const handleChange = (e) => {
     setFormValues({ ...form, [e.target.name]: e.target.value });
+    setIsFormChanged(true);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUserInfo(form));
     dispatch(checkUserAuth());
+    setIsFormChanged(false);
   };
 
   const handleCancel = (e) => {
@@ -88,12 +89,14 @@ export function ProfilePage() {
           error={false}
           extraClass={styles.input}
         />
-        <div className={styles.buttonWrap}>
-          <Button htmlType="submit">Сохранить</Button>
-          <Button onClick={handleCancel} htmlType="button" type="secondary">
-            Отмена
-          </Button>
-        </div>
+        {isFormChanged && (
+          <div className={styles.wrapper}>
+            <Button htmlType="submit">Сохранить</Button>
+            <Button onClick={handleCancel} htmlType="button" type="secondary">
+              Отмена
+            </Button>
+          </div>
+        )}
       </form>
     </section>
   );

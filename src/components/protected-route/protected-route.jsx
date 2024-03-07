@@ -1,12 +1,11 @@
 import { useSelector } from "react-redux";
 import { useLocation, Navigate } from "react-router-dom";
-import { getIsAuthChecked, getUser } from "../../services/slices/user/selector";
+import { getIsAuthChecked } from "../../services/slices/user/selector";
 import { SpinnerCircular } from "spinners-react";
 import styles from "./protected-route.module.css";
 
 function ProtectedRoute({ children, onlyUnAuth }) {
   const location = useLocation();
-  // const user = useSelector(getUser);
   const user = useSelector((state) => state.user.data);
   const isAuthChecked = useSelector(getIsAuthChecked);
 

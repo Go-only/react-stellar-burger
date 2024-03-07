@@ -8,7 +8,7 @@ import { ResetPage } from "../../pages/reset-password";
 import { ProfilePage } from "../../pages/profile";
 import { OrdersPage } from "../../pages/orders";
 import ProtectedRoute from "../protected-route/protected-route";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getLoginUser, getRegisterUser } from "../../utils/api";
 import { useEffect } from "react";
 import { checkUserAuth } from "../../services/slices/user/userSlice";
@@ -16,17 +16,23 @@ import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import { IngredientPage } from "../../pages/ingredient-page";
 import { Modal } from "../modal/modal";
 import HomePage from "../../pages/home-page";
+import {
+  fetchIngredients,
+  selectIngredients,
+} from "../../services/slices/burgerIngredientsSlice";
+import ErrorPage from "../../pages/error-page";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
-  // let navigate = useNavigate();
+  const ingredients = useSelector(selectIngredients);
+  let navigate = useNavigate();
   let state = location.state;
-  // console.log(location);
+  // console.log(ingredients);
 
-  // const closeModal = () => {
-  //   navigate(-1);
-  // };
+  const closeModal = () => {
+    navigate(-1);
+  };
 
   const clbLogin = (dataUser) => {
     dispatch(getLoginUser(dataUser));
@@ -35,6 +41,10 @@ function App() {
   const clbRegister = (dataUser) => {
     dispatch(getRegisterUser(dataUser));
   };
+
+  useEffect(() => {
+    dispatch(fetchIngredients());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(checkUserAuth());
@@ -106,18 +116,23 @@ function App() {
             }
           />
 
+          <Route path="*" element={<ErrorPage />} />
+
           <Route path="ingredients/:id" element={<IngredientPage />} />
         </Routes>
 
-        {/* {state && (
+        {state && state.backgroundLocation && (
           <Routes>
-            <Route path="/ingredients/:id">
-              <Modal title="Детали Ингридиента" onClose={closeModal}>
-                <IngredientDetails />
-              </Modal>
-            </Route>
+            <Route
+              path="/ingredients/:id"
+              element={
+                <Modal onClose={closeModal}>
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
           </Routes>
-        )} */}
+        )}
       </main>
     </div>
   );

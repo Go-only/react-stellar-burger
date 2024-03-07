@@ -29,7 +29,11 @@ export default function BurgerIngredient({
       // onClick={onClickIngredient}
       ref={dragRef}
     >
-      <Link to={`/ingredients/${_id}`} state={{ backgroundLocation: location }}>
+      <Link
+        className={styles.link}
+        to={`/ingredients/${_id}`}
+        state={{ backgroundLocation: location }}
+      >
         {count > 0 && (
           <div className={styles.counter}>
             <p className={styles.num}>{count}</p>

@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styles from "./app-header.module.css";
 import {
   Logo,
@@ -9,35 +10,46 @@ import {
 export default function AppHeader() {
   const menuTextClassNames = "text text_type_main-default ml-2";
   const menuMargin = "mt-4 mr-5 mb-4 ml-5";
+  const activeLink = `${styles.active_link}`;
+  const defaultLink = ` ${styles.link} ${menuMargin} ${styles.center}`;
 
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.center}>
-          <a
-            href="/"
-            className={`${styles.center} ${styles.link} ${menuMargin}`}
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? `${activeLink} ${defaultLink}` : `${defaultLink}`
+            }
           >
             <BurgerIcon type="secondary" />
             <p className={menuTextClassNames}>Конструктор</p>
-          </a>
-          <a
-            href="#"
-            className={`${styles.center} ${styles.link} ${menuMargin}`}
+          </NavLink>
+          <NavLink
+            to="/lenta"
+            className={({ isActive }) =>
+              isActive ? `${activeLink} ${defaultLink}` : `${defaultLink}`
+            }
           >
             <ListIcon type="secondary" />
             <p className={menuTextClassNames}>Лента заказов</p>
-          </a>
+          </NavLink>
         </div>
 
-        <a href="/" className={`${styles.center} ${styles.logo}`}>
+        <p className={`${styles.center} ${styles.logo}`}>
           <Logo />
-        </a>
+        </p>
 
-        <a href="/profile" className={`${styles.profile} ${styles.link}`}>
+        <NavLink
+          to="/profile"
+          className={({ isActive }) =>
+            isActive ? `${activeLink} ${styles.link}` : `${styles.link}`
+          }
+        >
           <ProfileIcon type="secondary" />
           <p className={menuTextClassNames}>Личный кабинет</p>
-        </a>
+        </NavLink>
       </nav>
     </header>
   );
