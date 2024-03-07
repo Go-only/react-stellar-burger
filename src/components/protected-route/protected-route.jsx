@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useLocation, Redirect } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import { getIsAuthChecked, getUser } from "../../services/slices/user/selector";
 import { SpinnerCircular } from "spinners-react";
 import styles from "./protected-route.module.css";
@@ -22,14 +22,13 @@ function ProtectedRoute({ children, onlyUnAuth }) {
   if (onlyUnAuth && user) {
     console.log("NAVIGATE FROM LOGIN TO INDEX");
     const from = location.state?.from || { pathname: "/" };
-    return <Redirect replace to={from} />;
+    const backgroundLocation = location.state?.from?.state || null;
+    return <Navigate replace to={from} state={{ backgroundLocation }} />;
   }
 
   if (!onlyUnAuth && !user) {
     console.log("NAVIGATE FROM PAGE TO LOGIN");
-    console.log("!onlyUnAuth && !user:");
-    console.log(location);
-    return <Redirect to={{ pathname: "/login", state: { from: location } }} />;
+    return <Navigate replace to={"/login"} state={{ from: location }} />;
   }
 
   console.log("RENDER COMPONENT");

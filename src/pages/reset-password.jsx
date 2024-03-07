@@ -1,5 +1,5 @@
 import styles from "./auth.module.css";
-import { Link, Redirect, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import {
   Input,
   PasswordInput,
@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { resetPassword } from "../services/slices/user/userSlice";
 
 export function ResetPage() {
-  const [form, setFormValues] = useState({ password: "", resetCode: "" });
+  const [form, setFormValues] = useState({ password: "", token: "" });
   const [redirectToResetPassword, setRedirectToResetPassword] = useState(false);
   const location = useLocation();
   const [redirectToForgotPassword, setRedirectToForgotPassword] =
@@ -24,7 +24,7 @@ export function ResetPage() {
   }, [location]);
 
   if (redirectToForgotPassword) {
-    return <Redirect to="/forgot-password" />;
+    return <Navigate to="/forgot-password" />;
   }
 
   const handleChange = (e) => {
@@ -33,12 +33,13 @@ export function ResetPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(form);
     dispatch(resetPassword(form));
     setRedirectToResetPassword(true);
   };
 
   if (redirectToResetPassword) {
-    return <Redirect to="/login" />;
+    return <Navigate to="/login" />;
   }
 
   return (
@@ -59,15 +60,20 @@ export function ResetPage() {
         <Input
           type="text"
           placeholder="Введите код из письма"
-          value={form.resetCode}
-          name={"resetCode"}
+          value={form.token}
+          name={"token"}
           onChange={handleChange}
           error={false}
           errorText={""}
           extraClass={styles.input}
         />
 
-        <Button type="primary" size="medium" extraClass={styles.button}>
+        <Button
+          type="primary"
+          size="medium"
+          htmlType="submit"
+          extraClass={styles.button}
+        >
           Восстановить
         </Button>
 

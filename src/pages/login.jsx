@@ -23,16 +23,7 @@ export function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser(formData)) // Вызываем функцию loginUser из Redux slice и передаем ей данные формы
-      .unwrap() // Извлекаем полезную нагрузку из обещания
-      .then((response) => {
-        // Обработка успешного входа
-        console.log("Успешный вход:", response);
-      })
-      .catch((error) => {
-        // Обработка ошибки входа
-        console.error("Ошибка входа:", error);
-      });
+    dispatch(loginUser(formData));
   };
 
   return (

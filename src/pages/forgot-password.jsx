@@ -1,5 +1,5 @@
 import styles from "./auth.module.css";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import {
   Input,
   Button,
@@ -25,7 +25,7 @@ export function ForgotPage() {
 
   if (redirectToResetPassword) {
     return (
-      <Redirect
+      <Navigate
         to={{
           pathname: "/reset-password",
           state: { fromForgotPassword: true },

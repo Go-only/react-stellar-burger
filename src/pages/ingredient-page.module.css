@@ -1,0 +1,29 @@
+.img {
+  width: 480px;
+  height: 240px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+  list-style: none;
+}
+
+.item {
+  text-align: center;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 120px auto;
+}

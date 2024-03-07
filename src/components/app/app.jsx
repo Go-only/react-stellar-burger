@@ -1,8 +1,6 @@
 import styles from "./app.module.css";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
 import AppHeader from "../app-header/app-header";
-import { Switch, Route, useLocation } from "react-router-dom";
+import { Route, useLocation, useNavigate, Routes } from "react-router-dom";
 import { LoginPage } from "../../pages/login";
 import { RegisterPage } from "../../pages/register";
 import { ForgotPage } from "../../pages/forgot-password";
@@ -14,11 +12,21 @@ import { useDispatch } from "react-redux";
 import { getLoginUser, getRegisterUser } from "../../utils/api";
 import { useEffect } from "react";
 import { checkUserAuth } from "../../services/slices/user/userSlice";
+import { IngredientDetails } from "../ingredient-details/ingredient-details";
+import { IngredientPage } from "../../pages/ingredient-page";
+import { Modal } from "../modal/modal";
+import HomePage from "../../pages/home-page";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  // let navigate = useNavigate();
+  let state = location.state;
   // console.log(location);
+
+  // const closeModal = () => {
+  //   navigate(-1);
+  // };
 
   const clbLogin = (dataUser) => {
     dispatch(getLoginUser(dataUser));
@@ -36,48 +44,80 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       <main className={styles.main}>
-        <Switch location={location}>
-          <Route path="/login">
-            <ProtectedRoute onlyUnAuth>
-              <LoginPage onLogin={clbLogin} />
-            </ProtectedRoute>
-          </Route>
+        <Routes
+          location={
+            state && state.backgroundLocation
+              ? state.backgroundLocation
+              : location
+          }
+        >
+          <Route path="/" element={<HomePage />} />
 
-          <Route path="/register">
-            <ProtectedRoute onlyUnAuth>
-              <RegisterPage onRegister={clbRegister} />
-            </ProtectedRoute>
-          </Route>
+          <Route
+            path="/login"
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <LoginPage onLogin={clbLogin} />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/forgot-password">
-            <ProtectedRoute onlyUnAuth>
-              <ForgotPage />
-            </ProtectedRoute>
-          </Route>
+          <Route
+            path="/register"
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <RegisterPage onRegister={clbRegister} />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/reset-password">
-            <ProtectedRoute onlyUnAuth>
-              <ResetPage />
-            </ProtectedRoute>
-          </Route>
+          <Route
+            path="forgot-password"
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <ForgotPage />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/profile" exact={true}>
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          </Route>
+          <Route
+            path="/reset-password"
+            element={
+              <ProtectedRoute onlyUnAuth>
+                <ResetPage />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/profile/orders" exact={true}>
-            <ProtectedRoute>
-              <OrdersPage />
-            </ProtectedRoute>
-          </Route>
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/orders"
+            element={
+              <ProtectedRoute>
+                <OrdersPage />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/">
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </Route>
-        </Switch>
+          <Route path="ingredients/:id" element={<IngredientPage />} />
+        </Routes>
+
+        {/* {state && (
+          <Routes>
+            <Route path="/ingredients/:id">
+              <Modal title="Детали Ингридиента" onClose={closeModal}>
+                <IngredientDetails />
+              </Modal>
+            </Route>
+          </Routes>
+        )} */}
       </main>
     </div>
   );

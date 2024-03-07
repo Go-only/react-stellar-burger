@@ -1,27 +1,27 @@
 import { useState } from "react";
 import styles from "./profile-menu.module.css";
 import ProfileTab from "../profile-tab/profile-tab";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../services/slices/user/userSlice";
 
 export const ProfileMenu = ({ activeTab }) => {
   const dispatch = useDispatch();
   const [currentTab] = useState(activeTab);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleTabClick = (value) => {
     if (value === "profile") {
-      history.replace({ pathname: "/profile" });
+      navigate("/profile"); // Используем navigate для навигации
     }
 
     if (value === "orderHistory") {
-      history.replace({ pathname: "/profile/orders" });
+      navigate("/profile/orders"); // Используем navigate для навигации
     }
 
     if (value === "logOut") {
       dispatch(logoutUser());
-      history.push("/");
+      navigate("/"); // Используем navigate для навигации
     }
   };
 

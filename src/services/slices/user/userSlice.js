@@ -86,6 +86,7 @@ export const resetPassword = createAsyncThunk(
   `${sliceName}/resetPassword`,
   async (data) => {
     const response = await resetPasswordApi(data);
+    console.log(data);
     return response;
   }
 );

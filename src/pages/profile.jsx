@@ -18,7 +18,6 @@ export function ProfilePage() {
   const dispatch = useDispatch();
 
   const userData = useSelector((state) => state.user.data);
-  console.log(userData);
 
   useEffect(() => {
     setFormValues({
