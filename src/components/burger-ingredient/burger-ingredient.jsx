@@ -3,6 +3,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import PropTypes from "prop-types";
 import { useDrag, DragPreviewImage } from "react-dnd";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function BurgerIngredient({
   _id,
@@ -12,6 +13,7 @@ export default function BurgerIngredient({
   onClickIngredient,
   count,
 }) {
+  const location = useLocation();
   const itemMargin = "mt-5 ml-4";
   const [{ isDragging }, dragRef, preview] = useDrag({
     type: "ingredient",
