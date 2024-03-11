@@ -1,4 +1,4 @@
-import styles from "./auth.module.css";
+import styles from "../auth.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Input,
@@ -6,11 +6,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { forgotPassword } from "../services/slices/userSlice";
+import { forgotPassword } from "../../services/slices/userSlice";
 
 export function ForgotPage() {
   const [form, setFormValues] = useState({ email: "" });
-  // const [redirectToResetPassword, setRedirectToResetPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,20 +20,8 @@ export function ForgotPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(forgotPassword(form.email));
-    // setRedirectToResetPassword(true);
     navigate("/reset-password", { state: { fromForgotPassword: true } });
   };
-
-  // if (redirectToResetPassword) {
-  //   return (
-  //     <Navigate
-  //       to={{
-  //         pathname: "/reset-password",
-  //         state: { fromForgotPassword: true },
-  //       }}
-  //     />
-  //   );
-  // }
 
   return (
     <div className={styles.wrap}>

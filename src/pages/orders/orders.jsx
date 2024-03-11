@@ -1,5 +1,5 @@
-import styles from "./profile.module.css";
-import { ProfileMenu } from "../components/profile-menu/profile-menu";
+import styles from "./orders.module.css";
+import { ProfileMenu } from "../../components/profile-menu/profile-menu";
 
 export function OrdersPage() {
   return (

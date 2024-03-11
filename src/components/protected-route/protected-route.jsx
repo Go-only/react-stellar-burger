@@ -3,7 +3,7 @@ import { useLocation, Navigate } from "react-router-dom";
 import { getIsAuthChecked } from "../../utils/selector";
 import { SpinnerCircular } from "spinners-react";
 import styles from "./protected-route.module.css";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 function ProtectedRoute({ children, onlyUnAuth }) {
   const location = useLocation();
@@ -37,7 +37,7 @@ function ProtectedRoute({ children, onlyUnAuth }) {
 
 ProtectedRoute.propTypes = {
   children: PropTypes.node.isRequired,
-  onlyUnAuth: PropTypes.bool
+  onlyUnAuth: PropTypes.bool,
 };
 
 export default ProtectedRoute;
