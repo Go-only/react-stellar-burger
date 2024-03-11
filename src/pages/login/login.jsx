@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../services/slices/userSlice";
+import { loginUser } from "../../services/slices/userSlice";
 import {
   Input,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./auth.module.css";
+import styles from "../auth.module.css";
 import { Link } from "react-router-dom";
 
 export function LoginPage() {

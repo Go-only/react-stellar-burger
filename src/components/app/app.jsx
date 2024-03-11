@@ -1,26 +1,26 @@
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import { Route, useLocation, useNavigate, Routes } from "react-router-dom";
-import { LoginPage } from "../../pages/login";
-import { RegisterPage } from "../../pages/register";
-import { ForgotPage } from "../../pages/forgot-password";
-import { ResetPage } from "../../pages/reset-password";
-import { ProfilePage } from "../../pages/profile";
-import { OrdersPage } from "../../pages/orders";
+import { LoginPage } from "../../pages/login/login";
+import { RegisterPage } from "../../pages/register/register";
+import { ForgotPage } from "../../pages/forgot-password/forgot-password";
+import { ResetPage } from "../../pages/reset-password/reset-password";
+import { ProfilePage } from "../../pages/profile/profile";
+import { OrdersPage } from "../../pages/orders/orders";
 import ProtectedRoute from "../protected-route/protected-route";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoginUser, getRegisterUser } from "../../utils/api";
 import { useEffect } from "react";
 import { checkUserAuth } from "../../services/slices/userSlice";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
-import { IngredientPage } from "../../pages/ingredient-page";
+import { IngredientPage } from "../../pages/ingredient-page/ingredient-page";
 import { Modal } from "../modal/modal";
-import HomePage from "../../pages/home-page";
+import HomePage from "../../pages/home-page/home-page";
 import {
   fetchIngredients,
   selectIngredients,
 } from "../../services/slices/burgerIngredientsSlice";
-import ErrorPage from "../../pages/error-page";
+import ErrorPage from "../../pages/error-page/error-page";
 
 function App() {
   const dispatch = useDispatch();

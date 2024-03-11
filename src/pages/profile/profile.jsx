@@ -1,5 +1,5 @@
 import styles from "./profile.module.css";
-import { ProfileMenu } from "../components/profile-menu/profile-menu";
+import { ProfileMenu } from "../../components/profile-menu/profile-menu";
 
 import {
   Input,
@@ -7,10 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import {
-  checkUserAuth,
-  updateUserInfo,
-} from "../services/slices/userSlice";
+import { checkUserAuth, updateUserInfo } from "../../services/slices/userSlice";
 
 export function ProfilePage() {
   const [form, setFormValues] = useState({ name: "", email: "", password: "" });

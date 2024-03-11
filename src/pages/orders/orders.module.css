@@ -1,0 +1,10 @@
+.wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  padding-top: 120px;
+}
+
+.text {
+  width: 320px;
+}

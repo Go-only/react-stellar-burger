@@ -1,4 +1,4 @@
-import styles from "./auth.module.css";
+import styles from "../auth.module.css";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import {
   Input,
@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { resetPassword } from "../services/slices/userSlice";
+import { resetPassword } from "../../services/slices/userSlice";
 
 export function ResetPage() {
   const [form, setFormValues] = useState({ password: "", token: "" });
