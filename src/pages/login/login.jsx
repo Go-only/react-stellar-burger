@@ -9,7 +9,7 @@ import {
 import styles from "../auth.module.css";
 import { Link } from "react-router-dom";
 
-export function LoginPage() {
+export function LoginPage({ onLogin }) {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
@@ -22,7 +22,7 @@ export function LoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser(formData));
+    onLogin(formData);
   };
 
   return (

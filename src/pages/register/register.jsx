@@ -9,7 +9,7 @@ import {
 import styles from "../auth.module.css";
 import { Link } from "react-router-dom";
 
-export function RegisterPage() {
+export function RegisterPage({ onRegister }) {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
@@ -23,7 +23,7 @@ export function RegisterPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(registerUser(formData)) // Вызываем функцию registerUser из Redux slice и передаем ей данные формы
+    onRegister(formData) // Вызываем функцию registerUser из Redux slice и передаем ей данные формы
       .unwrap() // Извлекаем полезную нагрузку из обещания
       .then((response) => {
         // Обработка успешной регистрации

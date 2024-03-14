@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { selectIngredients } from "../../services/slices/burgerIngredientsSlice";
 
 export const IngredientDetails = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const ingredients = useSelector(selectIngredients);
   const ingredient = ingredients.find((item) => item._id === id);
 

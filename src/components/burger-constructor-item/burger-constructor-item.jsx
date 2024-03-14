@@ -7,7 +7,7 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import PropTypes from "prop-types";
-import { ingredientType } from "../../utils/prop-types";
+// import { IngredientType } from "../../utils/prop-types";
 import styles from "./burger-constructor-item.module.css";
 
 function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
@@ -104,10 +104,10 @@ function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
   );
 }
 
-BurgerConstructorItem.propTypes = {
-  item: ingredientType.isRequired,
-  index: PropTypes.number.isRequired,
-  handleDeleteIngredient: PropTypes.func,
-};
+// BurgerConstructorItem.propTypes = {
+//   item: IngredientType.isRequired,
+//   index: PropTypes.number.isRequired,
+//   handleDeleteIngredient: PropTypes.func,
+// };
 
 export default BurgerConstructorItem;

@@ -1,8 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
 
 const sliceName = "burgerConstructor";
-const initialState = {
+
+interface IIngredient {
+  id: string;
+  type: string;
+}
+
+interface IConstructorState {
+  bun: IIngredient | null;
+  constructorIngredients: IIngredient[];
+}
+
+const initialState: IConstructorState = {
   bun: null, // булка
   constructorIngredients: [], // список всех ингредиентов в текущем конструкторе бургера
 };
@@ -11,7 +22,7 @@ export const burgerConstructorSlice = createSlice({
   name: sliceName,
   initialState,
   reducers: {
-    removeIngredient: (state, action) => {
+    removeIngredient: (state, action: PayloadAction<{ id: string }>) => {
       // Находим индекс ингредиента, который нужно удалить
       const index = state.constructorIngredients.findIndex(
         (ingredient) => ingredient.id === action.payload.id
@@ -21,7 +32,7 @@ export const burgerConstructorSlice = createSlice({
         state.constructorIngredients.splice(index, 1);
       }
     },
-    addConstructorIngredient: (state, action) => {
+    addConstructorIngredient: (state, action: PayloadAction<IIngredient>) => {
       if (action.payload.type === "bun") {
         state.constructorIngredients = state.constructorIngredients.filter(
           (ingredient) => ingredient.type !== "bun"
@@ -31,7 +42,7 @@ export const burgerConstructorSlice = createSlice({
         state.constructorIngredients.push({ ...action.payload, id: uuid() });
       }
     },
-    ingredientSort(state, action) {
+    ingredientSort(state, action: PayloadAction<{ from: number; to: number }>) {
       state.constructorIngredients.splice(
         action.payload.to,
         0,
@@ -43,7 +54,12 @@ export const burgerConstructorSlice = createSlice({
 
 export const { removeIngredient, addConstructorIngredient, ingredientSort } =
   burgerConstructorSlice.actions;
-export const selectConstructorIngredients = (state) =>
-  state.burgerConstructor.constructorIngredients;
-export const selectBun = (state) => state.burgerConstructor.bun;
+
+export const selectConstructorIngredients = (state: {
+  burgerConstructor: IConstructorState;
+}) => state.burgerConstructor.constructorIngredients;
+
+export const selectBun = (state: { burgerConstructor: IConstructorState }) =>
+  state.burgerConstructor.bun;
+
 export default burgerConstructorSlice.reducer;
