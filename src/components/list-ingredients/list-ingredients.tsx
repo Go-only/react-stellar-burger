@@ -1,30 +1,26 @@
 import styles from "./list-ingredients.module.css";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import { Modal } from "../modal/modal";
-import { IngredientDetails } from "../ingredient-details/ingredient-details";
-import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   selectConstructorIngredients,
   selectBun,
 } from "../../services/slices/burgerConstructorSlice";
 import { selectIngredients } from "../../services/slices/burgerIngredientsSlice";
-import {
-  openModal,
-  closeModal,
-  selectActiveModal,
-} from "../../services/slices/modalSlice";
 
-export default function ListIngredients({ titleIngredient, type }) {
+interface ListIngredientsProps {
+  titleIngredient: string;
+  type: string;
+}
+
+const ListIngredients: React.FC<ListIngredientsProps> = ({
+  titleIngredient,
+  type,
+}) => {
   const ingredients = useSelector(selectIngredients);
   // Фильтрация по типу ингредиента
   const filteredIngredients = ingredients.filter(
     (ingredient) => ingredient.type === type
   );
-
-  const dispatch = useDispatch();
-  const modalState = useSelector((state) => state.modal);
-  const activeModal = useSelector(selectActiveModal);
 
   const constructorIngredients = useSelector(selectConstructorIngredients);
   const bunIngredients = useSelector(selectBun);
@@ -40,16 +36,6 @@ export default function ListIngredients({ titleIngredient, type }) {
           <BurgerIngredient
             key={data._id}
             {...data}
-            onClickIngredient={() =>
-              dispatch(
-                openModal({
-                  isOpen: true,
-                  title: "Детали ингредиента",
-                  content: { ...data },
-                  active: "ingredient",
-                })
-              )
-            }
             count={
               titleIngredient === "Булки" &&
               bunIngredients &&
@@ -62,17 +48,8 @@ export default function ListIngredients({ titleIngredient, type }) {
           />
         ))}
       </ul>
-
-      {modalState.isOpen && activeModal === "ingredient" && (
-        <Modal title={modalState.title} onClose={() => dispatch(closeModal())}>
-          <IngredientDetails {...modalState.content} />
-        </Modal>
-      )}
     </>
   );
-}
-
-ListIngredients.propTypes = {
-  titleIngredient: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
 };
+
+export default ListIngredients;

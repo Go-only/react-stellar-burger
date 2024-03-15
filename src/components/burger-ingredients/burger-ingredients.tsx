@@ -3,7 +3,7 @@ import { useInView } from "react-intersection-observer";
 import styles from "./burger-ingredients.module.css";
 import ListIngredients from "../list-ingredients/list-ingredients";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services";
 
 export default function BurgerIngredients() {
   const [current, setCurrent] = useState("one");

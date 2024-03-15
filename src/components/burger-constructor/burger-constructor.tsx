@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services";
 import { useDrop } from "react-dnd";
 import {
   ConstructorElement,
@@ -22,6 +22,7 @@ import { fetchOrderResult } from "../../services/slices/orderDetailsSlice";
 
 import styles from "./burger-constructor.module.css";
 import { useNavigate } from "react-router-dom";
+import { IngredientType } from "../../utils/prop-types";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ export default function BurgerConstructor() {
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
-    drop: (droppedIngredientId, monitor) => {
+    drop: (droppedIngredientId: IngredientType, monitor) => {
       onDropHandler(droppedIngredientId);
     },
     collect: (monitor) => ({
@@ -45,7 +46,7 @@ export default function BurgerConstructor() {
     }),
   });
 
-  function onDropHandler(droppedIngredientId) {
+  function onDropHandler(droppedIngredientId: IngredientType) {
     // Находим информацию о перетаскиваемом ингредиенте
     const draggedIngredient = ingredients.find(
       (ingredient) => ingredient._id === droppedIngredientId._id
@@ -56,7 +57,8 @@ export default function BurgerConstructor() {
     }
   }
 
-  const handleDeleteIngredient = (item) => dispatch(removeIngredient(item));
+  const handleDeleteIngredient = (item: IngredientType) =>
+    dispatch(removeIngredient(item));
 
   function getTotalPrice() {
     let priceBun = 0;
@@ -156,13 +158,14 @@ export default function BurgerConstructor() {
                   isOpen: true,
                   content: "Данные заказа",
                   active: "order",
+                  title: "",
                 })
               );
               dispatch(
                 fetchOrderResult({
                   ingredients: [
                     ...constructorIngredients.map((e) => e._id),
-                    bun._id,
+                    bun ? bun._id : "",
                   ],
                 })
               );
@@ -174,7 +177,7 @@ export default function BurgerConstructor() {
         </Button>
         {modalState.isOpen && activeModal === "order" && (
           <Modal onClose={() => dispatch(closeModal())}>
-            <OrderDetails {...modalState.content} />
+            <OrderDetails />
           </Modal>
         )}
       </div>

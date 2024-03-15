@@ -1,45 +1,58 @@
+import React, { useState, useEffect, ChangeEvent } from "react";
 import styles from "./profile.module.css";
 import { ProfileMenu } from "../../components/profile-menu/profile-menu";
-
 import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "../../services";
 import { checkUserAuth, updateUserInfo } from "../../services/slices/userSlice";
 
-export function ProfilePage() {
-  const [form, setFormValues] = useState({ name: "", email: "", password: "" });
-  const [isFormChanged, setIsFormChanged] = useState(false);
+type UserData = {
+  name: string;
+  email: string;
+} | null;
+
+export const ProfilePage: React.FC = () => {
+  const [form, setFormValues] = useState<{
+    name: string;
+    email: string;
+    password: string;
+  }>({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [isFormChanged, setIsFormChanged] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.user.data);
+  const userData = useSelector(
+    (state: { user: { data: UserData } }) => state.user.data
+  );
 
   useEffect(() => {
     setFormValues({
       ...form,
-      name: userData.user.name,
-      email: userData.user.email,
+      name: userData?.name || "",
+      email: userData?.email || "",
     });
-  }, []);
+  }, [userData]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...form, [e.target.name]: e.target.value });
     setIsFormChanged(true);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(updateUserInfo(form));
     dispatch(checkUserAuth());
     setIsFormChanged(false);
   };
 
-  const handleCancel = (e) => {
-    e.preventDefault();
+  const handleCancel = () => {
     setFormValues({
-      name: userData.user.name,
-      email: userData.user.email,
+      name: userData?.name || "",
+      email: userData?.email || "",
       password: "",
     });
   };
@@ -47,7 +60,7 @@ export function ProfilePage() {
   return (
     <section className={styles.wrap}>
       <div className={styles.text}>
-        <ProfileMenu activeTab={"profile"} />
+        <ProfileMenu activeTab="profile" />
         <p className="text text_type_main-default text_color_inactive mt-20">
           В этом разделе вы можете изменить свои персональные данные
         </p>
@@ -97,4 +110,4 @@ export function ProfilePage() {
       </form>
     </section>
   );
-}
+};

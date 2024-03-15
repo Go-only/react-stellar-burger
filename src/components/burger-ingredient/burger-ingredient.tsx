@@ -1,18 +1,24 @@
 import styles from "./burger-ingredient.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { useDrag, DragPreviewImage } from "react-dnd";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+
+interface BurgerIngredientProps {
+  _id: string;
+  image: string;
+  name: string;
+  price: number;
+  count: number;
+}
 
 export default function BurgerIngredient({
   _id,
   image,
   name,
   price,
-  onClickIngredient,
   count,
-}) {
+}: BurgerIngredientProps) {
   const location = useLocation();
   const itemMargin = "mt-5 ml-4";
   const [{ isDragging }, dragRef, preview] = useDrag({
@@ -24,11 +30,7 @@ export default function BurgerIngredient({
   });
 
   return (
-    <li
-      className={`${styles.item} ${itemMargin}`}
-      // onClick={onClickIngredient}
-      ref={dragRef}
-    >
+    <li className={`${styles.item} ${itemMargin}`} ref={dragRef}>
       <Link
         className={styles.link}
         to={`/ingredients/${_id}`}
@@ -52,12 +54,3 @@ export default function BurgerIngredient({
     </li>
   );
 }
-
-BurgerIngredient.propTypes = {
-  _id: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  onClickIngredient: PropTypes.func.isRequired,
-  count: PropTypes.number.isRequired,
-};

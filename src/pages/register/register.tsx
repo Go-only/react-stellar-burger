@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../../services/slices/userSlice";
 import {
   Input,
   PasswordInput,
@@ -9,30 +7,24 @@ import {
 import styles from "../auth.module.css";
 import { Link } from "react-router-dom";
 
-export function RegisterPage() {
-  const dispatch = useDispatch();
+interface RegisterPageProps {
+  onRegister: (data: { name: string; email: string; password: string }) => void;
+}
+
+export function RegisterPage({ onRegister }: RegisterPageProps) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     name: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(registerUser(formData)) // Вызываем функцию registerUser из Redux slice и передаем ей данные формы
-      .unwrap() // Извлекаем полезную нагрузку из обещания
-      .then((response) => {
-        // Обработка успешной регистрации
-        console.log("Успешная регистрация:", response);
-      })
-      .catch((error) => {
-        // Обработка ошибки регистрации
-        console.error("Ошибка регистрации:", error);
-      });
+    onRegister(formData); // Вызываем функцию registerUser из Redux slice и передаем ей данные формы
   };
 
   return (

@@ -1,8 +1,9 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { userSlice } from "../services/slices/userSlice";
+import { RootState } from "../services";
 
 // Селектор для проверки состояния аутентификации
 export const getIsAuthChecked = createSelector(
-  (state) => state[userSlice.name].IsAuthChecked,
+  (state: RootState) => state[userSlice.name].IsAuthChecked,
   (isAuthChecked) => isAuthChecked
 );

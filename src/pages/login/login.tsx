@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { loginUser } from "../../services/slices/userSlice";
 import {
   Input,
   PasswordInput,
@@ -9,20 +7,23 @@ import {
 import styles from "../auth.module.css";
 import { Link } from "react-router-dom";
 
-export function LoginPage() {
-  const dispatch = useDispatch();
+interface LoginPageProps {
+  onLogin: (data: { email: string; password: string }) => void;
+}
+
+export function LoginPage({ onLogin }: LoginPageProps) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(loginUser(formData));
+    onLogin(formData);
   };
 
   return (

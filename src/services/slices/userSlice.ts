@@ -7,13 +7,17 @@ import {
   forgotPasswordApi,
   resetPasswordApi,
 } from "../../utils/api";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getActionName,
   isActionPending,
   isActionRejected,
 } from "../../utils/redux";
 import { deleteCookie, setCookie } from "../../utils/cookies";
+
+type State = {
+  [key: string]: boolean | null;
+};
 
 const initialState = {
   IsAuthChecked: false, // факт проверки аутентификации пользователя (прошла ли уже эта проверка или нет)
@@ -47,7 +51,7 @@ export const checkUserAuth = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   `${sliceName}/registerUser`,
-  async (dataUser) => {
+  async (dataUser: { email: string; password: string; name: string }) => {
     const data = await getRegisterUser(dataUser);
     setCookie("accessToken", data.accessToken);
     setCookie("refreshToken", data.refreshToken);
@@ -57,7 +61,7 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   `${sliceName}/loginUser`,
-  async (dataUser) => {
+  async (dataUser: { email: string; password: string }) => {
     const data = await getLoginUser(dataUser);
     setCookie("accessToken", data.accessToken);
     setCookie("refreshToken", data.refreshToken);
@@ -76,7 +80,7 @@ export const logoutUser = createAsyncThunk(
 
 export const forgotPassword = createAsyncThunk(
   `${sliceName}/forgotPassword`,
-  async (email) => {
+  async (email: string) => {
     const data = await forgotPasswordApi(email);
     return data;
   }
@@ -84,7 +88,7 @@ export const forgotPassword = createAsyncThunk(
 
 export const resetPassword = createAsyncThunk(
   `${sliceName}/resetPassword`,
-  async (data) => {
+  async (data: { password: string; token: string }) => {
     const response = await resetPasswordApi(data);
     return response;
   }
@@ -92,7 +96,7 @@ export const resetPassword = createAsyncThunk(
 
 export const updateUserInfo = createAsyncThunk(
   `${sliceName}/updateUserInfo`,
-  async (data) => {
+  async (data: { email: string; name: string; password: string }) => {
     const response = await updateUserProfile(data);
     return response;
   }
@@ -126,14 +130,20 @@ export const userSlice = createSlice({
       .addCase(logoutUser.fulfilled, (state) => {
         state.data = null;
       })
-      .addMatcher(isActionPending(userSlice.name), (state, action) => {
-        state[`${getActionName(action.type)}Request`] = true;
-        state[`${getActionName(action.type)}Error`] = null;
-      })
-      .addMatcher(isActionRejected(userSlice.name), (state, action) => {
-        state[`${getActionName(action.type)}Request`] = action.payload;
-        state[`${getActionName(action.type)}Error`] = action.error.message;
-      });
+      .addMatcher(
+        isActionPending(userSlice.name),
+        (state: State, action: PayloadAction<any>) => {
+          state[`${getActionName(action)}Request`] = true;
+          state[`${getActionName(action)}Error`] = null;
+        }
+      )
+      .addMatcher(
+        isActionRejected(userSlice.name),
+        (state: State, action: PayloadAction<any>) => {
+          state[`${getActionName(action)}Request`] = action.payload;
+          state[`${getActionName(action)}Error`] = action.payload;
+        }
+      );
   },
 });
 

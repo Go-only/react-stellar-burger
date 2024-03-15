@@ -8,37 +8,40 @@ import { ResetPage } from "../../pages/reset-password/reset-password";
 import { ProfilePage } from "../../pages/profile/profile";
 import { OrdersPage } from "../../pages/orders/orders";
 import ProtectedRoute from "../protected-route/protected-route";
-import { useDispatch, useSelector } from "react-redux";
-import { getLoginUser, getRegisterUser } from "../../utils/api";
+import { useDispatch } from "../../services";
 import { useEffect } from "react";
-import { checkUserAuth } from "../../services/slices/userSlice";
+import {
+  checkUserAuth,
+  loginUser,
+  registerUser,
+} from "../../services/slices/userSlice";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import { IngredientPage } from "../../pages/ingredient-page/ingredient-page";
 import { Modal } from "../modal/modal";
 import HomePage from "../../pages/home-page/home-page";
-import {
-  fetchIngredients,
-  selectIngredients,
-} from "../../services/slices/burgerIngredientsSlice";
+import { fetchIngredients } from "../../services/slices/burgerIngredientsSlice";
 import ErrorPage from "../../pages/error-page/error-page";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const ingredients = useSelector(selectIngredients);
   let navigate = useNavigate();
-  let state = location.state;
+  let state = location.state as { backgroundLocation?: Location };
 
   const closeModal = () => {
     navigate(-1);
   };
 
-  const clbLogin = (dataUser) => {
-    dispatch(getLoginUser(dataUser));
+  const clbLogin = (dataUser: { email: string; password: string }) => {
+    dispatch(loginUser(dataUser));
   };
 
-  const clbRegister = (dataUser) => {
-    dispatch(getRegisterUser(dataUser));
+  const clbRegister = (dataUser: {
+    name: string;
+    email: string;
+    password: string;
+  }) => {
+    dispatch(registerUser(dataUser));
   };
 
   useEffect(() => {

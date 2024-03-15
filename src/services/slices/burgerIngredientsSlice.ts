@@ -1,17 +1,26 @@
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { RootState } from "..";
+import { IngredientType } from "../../utils/prop-types";
+
 import { getIngredientsRequest } from "../../utils/api";
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+// Интерфейс для состояния ингредиентов
+interface IngredientsState {
+  ingredients: IngredientType[];
+  loading: boolean;
+  error: string | null;
+}
 
 // Начальное состояние для среза ингредиентов бургера
-const initialState = {
+const initialState: IngredientsState = {
   ingredients: [], // Массив ингредиентов
   loading: true, // Флаг загрузки
-  error: null // Ошибка (если есть)
+  error: null, // Ошибка (если есть)
 };
 
-const sliceName = 'burgerIngredients';
+const sliceName = "burgerIngredients";
 
 // Создаем асинхронное действие (thunk) для загрузки ингредиентов
-
 export const fetchIngredients = createAsyncThunk(
   `${sliceName}/fetchIngredients`,
   async () => {
@@ -20,15 +29,14 @@ export const fetchIngredients = createAsyncThunk(
   }
 );
 
-
 // Создаем срез (slice) для управления ингредиентами бургера
 export const burgerIngredientsSlice = createSlice({
   name: sliceName,
   initialState,
   reducers: {},
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-      .addCase(fetchIngredients.pending, state => {
+      .addCase(fetchIngredients.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -39,11 +47,16 @@ export const burgerIngredientsSlice = createSlice({
       })
       .addCase(fetchIngredients.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.error.message || "Something went wrong";
       });
-  }
+  },
 });
 
-export const selectIngredients = state => state.burgerIngredients.ingredients;
-export default burgerIngredientsSlice.reducer; // Экспортируем редьюсер
+// Селекторы для доступа к состоянию ингредиентов
+export const selectIngredients = (state: RootState) =>
+  state.burgerIngredients.ingredients;
+export const selectLoadingStatus = (state: RootState) =>
+  state.burgerIngredients.loading;
+export const selectError = (state: RootState) => state.burgerIngredients.error;
 
+export default burgerIngredientsSlice.reducer; // Экспортируем редьюсер
