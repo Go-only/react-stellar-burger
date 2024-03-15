@@ -133,15 +133,15 @@ export const userSlice = createSlice({
       .addMatcher(
         isActionPending(userSlice.name),
         (state: State, action: PayloadAction<any>) => {
-          state[`${getActionName(action.type)}Request`] = true;
-          state[`${getActionName(action.type)}Error`] = null;
+          state[`${getActionName(action)}Request`] = true;
+          state[`${getActionName(action)}Error`] = null;
         }
       )
       .addMatcher(
         isActionRejected(userSlice.name),
         (state: State, action: PayloadAction<any>) => {
-          state[`${getActionName(action.type)}Request`] = action.payload;
-          state[`${getActionName(action.type)}Error`] = action.payload.message;
+          state[`${getActionName(action)}Request`] = action.payload;
+          state[`${getActionName(action)}Error`] = action.payload;
         }
       );
   },

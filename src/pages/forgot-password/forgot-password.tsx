@@ -13,11 +13,11 @@ export function ForgotPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(forgotPassword(form.email));
     navigate("/reset-password", { state: { fromForgotPassword: true } });

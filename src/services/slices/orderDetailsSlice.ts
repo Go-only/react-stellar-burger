@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "..";
 import { createOrderRequest } from "../../utils/api";
-import { IngredientType } from "../../utils/prop-types";
 
 interface IOrderDetailsState {
-  order: number | null; // Номер заказа
+  order: {
+    number: number | null; // Номер заказа
+  } | null;
   loading: boolean; // Флаг загрузки
   error: string | null; // Ошибка (если есть)
 }

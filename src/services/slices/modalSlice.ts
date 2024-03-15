@@ -27,6 +27,7 @@ export const modalSlice = createSlice({
         title: string;
         content: string | null;
         active: string | null;
+        isOpen: boolean;
       }>
     ) => {
       state.isOpen = true;

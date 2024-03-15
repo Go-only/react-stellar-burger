@@ -1,16 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
+import { IngredientType } from "../../utils/prop-types";
 
 const sliceName = "burgerConstructor";
 
-interface IIngredient {
-  id: string;
-  type: string;
-}
-
 interface IConstructorState {
-  bun: IIngredient | null;
-  constructorIngredients: IIngredient[];
+  bun: IngredientType | null;
+  constructorIngredients: IngredientType[];
 }
 
 const initialState: IConstructorState = {
@@ -32,7 +28,10 @@ export const burgerConstructorSlice = createSlice({
         state.constructorIngredients.splice(index, 1);
       }
     },
-    addConstructorIngredient: (state, action: PayloadAction<IIngredient>) => {
+    addConstructorIngredient: (
+      state,
+      action: PayloadAction<IngredientType>
+    ) => {
       if (action.payload.type === "bun") {
         state.constructorIngredients = state.constructorIngredients.filter(
           (ingredient) => ingredient.type !== "bun"

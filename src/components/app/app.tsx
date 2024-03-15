@@ -8,7 +8,7 @@ import { ResetPage } from "../../pages/reset-password/reset-password";
 import { ProfilePage } from "../../pages/profile/profile";
 import { OrdersPage } from "../../pages/orders/orders";
 import ProtectedRoute from "../protected-route/protected-route";
-import { useDispatch, useSelector } from "../../services";
+import { useDispatch } from "../../services";
 import { useEffect } from "react";
 import {
   checkUserAuth,
@@ -19,17 +19,12 @@ import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import { IngredientPage } from "../../pages/ingredient-page/ingredient-page";
 import { Modal } from "../modal/modal";
 import HomePage from "../../pages/home-page/home-page";
-import {
-  fetchIngredients,
-  selectIngredients,
-} from "../../services/slices/burgerIngredientsSlice";
+import { fetchIngredients } from "../../services/slices/burgerIngredientsSlice";
 import ErrorPage from "../../pages/error-page/error-page";
-// import { RootState } from "../../services";
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const ingredients = useSelector(selectIngredients);
   let navigate = useNavigate();
   let state = location.state as { backgroundLocation?: Location };
 

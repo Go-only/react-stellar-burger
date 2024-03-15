@@ -5,13 +5,23 @@ import {
 import { ingredientSort } from "../../services/slices/burgerConstructorSlice";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { useDrag, useDrop } from "react-dnd";
-import PropTypes from "prop-types";
+import { XYCoord, useDrag, useDrop } from "react-dnd";
 // import { IngredientType } from "../../utils/prop-types";
 import styles from "./burger-constructor-item.module.css";
+import { IngredientType } from "../../utils/prop-types";
 
-function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
-  const ref = useRef(null);
+interface BurgerConstructorItemProps {
+  item: IngredientType;
+  index: number;
+  handleDeleteIngredient: (item: IngredientType) => void;
+}
+
+function BurgerConstructorItem({
+  item,
+  index,
+  handleDeleteIngredient,
+}: BurgerConstructorItemProps) {
+  const ref = useRef<HTMLLIElement>(null);
   const dispatch = useDispatch();
 
   const [{ isDragging }, drag] = useDrag({
@@ -19,7 +29,7 @@ function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
     item: () => {
       return { id: item.id, index };
     },
-    collect: (monitor) => ({
+    collect: (monitor: any) => ({
       isDragging: monitor.isDragging(),
     }),
   });
@@ -31,7 +41,7 @@ function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: any, monitor) {
       if (!ref.current) {
         return;
       }
@@ -54,7 +64,7 @@ function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
       const clientOffset = monitor.getClientOffset();
 
       // Get pixels to the top
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
       // Only perform the move when the mouse has crossed half of the items height
       // When dragging downwards, only move when the cursor is below 50%
@@ -97,17 +107,10 @@ function BurgerConstructorItem({ item, index, handleDeleteIngredient }) {
         text={item.name}
         price={item.price}
         thumbnail={item.image}
-        index={index}
         handleClose={() => handleDeleteIngredient(item)}
       />
     </li>
   );
 }
-
-// BurgerConstructorItem.propTypes = {
-//   item: IngredientType.isRequired,
-//   index: PropTypes.number.isRequired,
-//   handleDeleteIngredient: PropTypes.func,
-// };
 
 export default BurgerConstructorItem;
