@@ -6,7 +6,6 @@ import { selectOrderDetails } from "../../services/slices/orderDetailsSlice";
 
 export const OrderDetails = () => {
   const { order, loading, error } = useSelector(selectOrderDetails);
-  console.log(order);
 
   return (
     <div className={`${styles.container} mb-30`}>

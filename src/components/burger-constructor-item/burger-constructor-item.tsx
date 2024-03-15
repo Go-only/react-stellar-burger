@@ -5,7 +5,7 @@ import {
 import { ingredientSort } from "../../services/slices/burgerConstructorSlice";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { XYCoord, useDrag, useDrop } from "react-dnd";
+import { DragSourceMonitor, XYCoord, useDrag, useDrop } from "react-dnd";
 // import { IngredientType } from "../../utils/prop-types";
 import styles from "./burger-constructor-item.module.css";
 import { IngredientType } from "../../utils/prop-types";
@@ -29,7 +29,7 @@ function BurgerConstructorItem({
     item: () => {
       return { id: item.id, index };
     },
-    collect: (monitor: any) => ({
+    collect: (monitor: DragSourceMonitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
