@@ -27,7 +27,7 @@ export default function AppHeader() {
             <p className={menuTextClassNames}>Конструктор</p>
           </NavLink>
           <NavLink
-            to="/lenta"
+            to="/feed"
             className={({ isActive }) =>
               isActive ? `${activeLink} ${defaultLink}` : `${defaultLink}`
             }

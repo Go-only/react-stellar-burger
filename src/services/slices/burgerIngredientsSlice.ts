@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "..";
 import { IngredientType } from "../../utils/prop-types";
 
-import { getIngredientsRequest } from "../../utils/api";
+import api from "../../utils/api";
 
 // Интерфейс для состояния ингредиентов
 interface IngredientsState {
@@ -24,7 +24,7 @@ const sliceName = "burgerIngredients";
 export const fetchIngredients = createAsyncThunk(
   `${sliceName}/fetchIngredients`,
   async () => {
-    const data = await getIngredientsRequest();
+    const data = await api.getIngredientsRequest();
     return data.data;
   }
 );

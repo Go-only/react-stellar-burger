@@ -1,12 +1,4 @@
-import {
-  getUser,
-  getLoginUser,
-  getRegisterUser,
-  updateUserProfile,
-  logoutUserApi,
-  forgotPasswordApi,
-  resetPasswordApi,
-} from "../../utils/api";
+import api from "../../utils/api";
 import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getActionName,
@@ -39,7 +31,7 @@ export const checkUserAuth = createAsyncThunk(
   `${sliceName}/checkUserAuth`,
   async (_, { dispatch }) => {
     try {
-      const data = await getUser();
+      const data = await api.getUser();
       return data;
     } catch (error) {
       return Promise.reject(error);
@@ -52,7 +44,7 @@ export const checkUserAuth = createAsyncThunk(
 export const registerUser = createAsyncThunk(
   `${sliceName}/registerUser`,
   async (dataUser: { email: string; password: string; name: string }) => {
-    const data = await getRegisterUser(dataUser);
+    const data = await api.getRegisterUser(dataUser);
     setCookie("accessToken", data.accessToken);
     setCookie("refreshToken", data.refreshToken);
     return data;
@@ -62,7 +54,7 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   `${sliceName}/loginUser`,
   async (dataUser: { email: string; password: string }) => {
-    const data = await getLoginUser(dataUser);
+    const data = await api.getLoginUser(dataUser);
     setCookie("accessToken", data.accessToken);
     setCookie("refreshToken", data.refreshToken);
     return data;
@@ -72,7 +64,7 @@ export const loginUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   `${sliceName}/logoutUser`,
   async () => {
-    await logoutUserApi();
+    await api.logoutUserApi();
     deleteCookie("accessToken");
     deleteCookie("refreshToken");
   }
@@ -81,7 +73,7 @@ export const logoutUser = createAsyncThunk(
 export const forgotPassword = createAsyncThunk(
   `${sliceName}/forgotPassword`,
   async (email: string) => {
-    const data = await forgotPasswordApi(email);
+    const data = await api.forgotPasswordApi(email);
     return data;
   }
 );
@@ -89,7 +81,7 @@ export const forgotPassword = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
   `${sliceName}/resetPassword`,
   async (data: { password: string; token: string }) => {
-    const response = await resetPasswordApi(data);
+    const response = await api.resetPasswordApi(data);
     return response;
   }
 );
@@ -97,7 +89,7 @@ export const resetPassword = createAsyncThunk(
 export const updateUserInfo = createAsyncThunk(
   `${sliceName}/updateUserInfo`,
   async (data: { email: string; name: string; password: string }) => {
-    const response = await updateUserProfile(data);
+    const response = await api.updateUserProfile(data);
     return response;
   }
 );
