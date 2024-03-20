@@ -48,11 +48,19 @@ export const burgerConstructorSlice = createSlice({
         state.constructorIngredients.splice(action.payload.from, 1)[0]
       );
     },
+    clearConstructor(state) {
+      state.bun = null;
+      state.constructorIngredients = [];
+    },
   },
 });
 
-export const { removeIngredient, addConstructorIngredient, ingredientSort } =
-  burgerConstructorSlice.actions;
+export const {
+  removeIngredient,
+  addConstructorIngredient,
+  ingredientSort,
+  clearConstructor,
+} = burgerConstructorSlice.actions;
 
 export const selectConstructorIngredients = (state: {
   burgerConstructor: IConstructorState;

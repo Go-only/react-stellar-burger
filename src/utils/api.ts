@@ -205,17 +205,3 @@ export class Api {
 
 const api = new Api();
 export default api;
-// export {
-//   getIngredientsRequest,
-//   createOrderRequest,
-//   getLoginUser,
-//   getUser,
-//   getRegisterUser,
-//   refreshToken,
-//   requestWithRefresh,
-//   forgotPasswordApi,
-//   resetPasswordApi,
-//   updateUserProfile,
-//   logoutUserApi,
-//   getOrderApi,
-// };

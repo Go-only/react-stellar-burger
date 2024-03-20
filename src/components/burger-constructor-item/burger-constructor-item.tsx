@@ -4,7 +4,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { ingredientSort } from "../../services/slices/burgerConstructorSlice";
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services";
 import { DragSourceMonitor, XYCoord, useDrag, useDrop } from "react-dnd";
 // import { IngredientType } from "../../utils/prop-types";
 import styles from "./burger-constructor-item.module.css";

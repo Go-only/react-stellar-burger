@@ -15,6 +15,7 @@ import {
 import {
   addConstructorIngredient,
   removeIngredient,
+  clearConstructor,
 } from "../../services/slices/burgerConstructorSlice";
 import { selectIngredients } from "../../services/slices/burgerIngredientsSlice";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
@@ -168,7 +169,10 @@ export default function BurgerConstructor() {
                     bun ? bun._id : "",
                   ],
                 })
-              );
+              ).then(() => {
+                // Очищаем конструктор после успешного получения номера заказа
+                dispatch(clearConstructor());
+              });
             }
           }}
           disabled={bun === null && constructorIngredients.length === 0}
