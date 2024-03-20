@@ -1,7 +1,34 @@
 import styles from "./orders.module.css";
 import { ProfileMenu } from "../../components/profile-menu/profile-menu";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "../../services";
+import { getCookie } from "../../utils/cookies";
+import {
+  wsConnectOrder,
+  wsDisconnectOrder,
+} from "../../services/orders/actions";
+import Order from "../../components/order/order";
 
 export function OrdersPage() {
+  const dispatch = useDispatch();
+  const orders = useSelector((state) => state.Orders.data);
+
+  useEffect(() => {
+    const accessToken = getCookie("accessToken");
+    dispatch(
+      wsConnectOrder({
+        wsUrl: `wss://norma.nomoreparties.space/orders?token=${accessToken?.replace(
+          "Bearer ",
+          ""
+        )}`,
+        withTokenRefresh: true,
+      })
+    );
+    return () => {
+      dispatch(wsDisconnectOrder());
+    };
+  }, [dispatch]);
+
   return (
     <section className={styles.wrap}>
       <div className={styles.text}>
@@ -10,7 +37,16 @@ export function OrdersPage() {
           В этом разделе вы можете просмотреть свою историю заказов
         </p>
       </div>
-      <p>История заказов</p>
+      <div className={styles.orders__container}>
+        {orders?.orders?.map((order) => (
+          <Order
+            key={order._id}
+            order={order}
+            url={"/profile/orders"}
+            showStatus={true}
+          />
+        ))}
+      </div>
     </section>
   );
 }

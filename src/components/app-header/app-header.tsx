@@ -6,6 +6,7 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
 
 export default function AppHeader() {
   const menuTextClassNames = "text text_type_main-default ml-2";
@@ -27,7 +28,7 @@ export default function AppHeader() {
             <p className={menuTextClassNames}>Конструктор</p>
           </NavLink>
           <NavLink
-            to="/lenta"
+            to="/feed"
             className={({ isActive }) =>
               isActive ? `${activeLink} ${defaultLink}` : `${defaultLink}`
             }
@@ -38,7 +39,9 @@ export default function AppHeader() {
         </div>
 
         <p className={`${styles.center} ${styles.logo}`}>
-          <Logo />
+          <Link to="/">
+            <Logo />
+          </Link>
         </p>
 
         <NavLink

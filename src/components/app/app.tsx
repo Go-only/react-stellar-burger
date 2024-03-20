@@ -7,6 +7,7 @@ import { ForgotPage } from "../../pages/forgot-password/forgot-password";
 import { ResetPage } from "../../pages/reset-password/reset-password";
 import { ProfilePage } from "../../pages/profile/profile";
 import { OrdersPage } from "../../pages/orders/orders";
+import OrderInfo from "../../pages/order-info/order-info";
 import ProtectedRoute from "../protected-route/protected-route";
 import { useDispatch } from "../../services";
 import { useEffect } from "react";
@@ -21,6 +22,7 @@ import { Modal } from "../modal/modal";
 import HomePage from "../../pages/home-page/home-page";
 import { fetchIngredients } from "../../services/slices/burgerIngredientsSlice";
 import ErrorPage from "../../pages/error-page/error-page";
+import FeedPage from "../../pages/feed/feed";
 
 function App() {
   const dispatch = useDispatch();
@@ -118,9 +120,21 @@ function App() {
             }
           />
 
+          <Route
+            path="profile/orders/:number"
+            element={
+              <ProtectedRoute>
+                <OrderInfo />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="*" element={<ErrorPage />} />
 
           <Route path="ingredients/:id" element={<IngredientPage />} />
+
+          <Route path="feed" element={<FeedPage />} />
+          <Route path="feed/:number" element={<OrderInfo />} />
         </Routes>
 
         {state && state.backgroundLocation && (
@@ -131,6 +145,24 @@ function App() {
                 <Modal onClose={closeModal}>
                   <IngredientDetails />
                 </Modal>
+              }
+            />
+            <Route
+              path="/feed/:number"
+              element={
+                <Modal onClose={closeModal}>
+                  <OrderInfo />
+                </Modal>
+              }
+            />
+            <Route
+              path="/profile/orders/:number"
+              element={
+                <ProtectedRoute>
+                  <Modal onClose={closeModal}>
+                    <OrderInfo />
+                  </Modal>
+                </ProtectedRoute>
               }
             />
           </Routes>

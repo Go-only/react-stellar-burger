@@ -2,16 +2,15 @@ import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from "react-dom";
 import { ModalOverlay } from "../modal-overlay/modal-overlay";
-import { useEffect } from "react";
+import { PropsWithChildren, useEffect } from "react";
 
 const modalRoot = document.querySelector("#modals");
 
 interface ModalProps {
   onClose: () => void;
-  children: React.ReactNode;
 }
 
-export const Modal = ({ onClose, children }: ModalProps) => {
+export const Modal = ({ onClose, children }: PropsWithChildren<ModalProps>) => {
   useEffect(() => {
     function closeByEscape(evt: KeyboardEvent) {
       if (evt.key === "Escape") {
@@ -33,7 +32,13 @@ export const Modal = ({ onClose, children }: ModalProps) => {
       <div className={styles.modal}>
         <div className={`${styles.header} pt-10 pr-10 ml-10`}>
           <p className="text text_type_main-large"></p>
-          <CloseIcon type="primary" onClick={onClose} />
+          <button
+            type="button"
+            className={styles.close_button}
+            onClick={onClose}
+          >
+            <CloseIcon type="primary" />
+          </button>
         </div>
         {children}
       </div>
