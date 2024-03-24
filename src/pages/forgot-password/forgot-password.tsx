@@ -6,7 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { forgotPassword } from "../../services/slices/userSlice";
+import { forgotPassword } from "../../services/slices/user/userSlice";
 
 export function ForgotPage() {
   const [form, setFormValues] = useState({ email: "" });

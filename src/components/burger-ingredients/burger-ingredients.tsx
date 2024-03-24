@@ -49,7 +49,10 @@ export default function BurgerIngredients() {
           Начинки
         </Tab>
       </div>
-      <div className={`${styles.custom_scroll} ${styles.ingredients}`}>
+      <div
+        className={`${styles.custom_scroll} ${styles.ingredients}`}
+        data-cy="ingredients"
+      >
         {loading || error ? (
           <p className={styles.loading}>
             {loading
