@@ -2,7 +2,7 @@
 
 **Ссылка на проект**
 
-[Mesto](https://go-only.github.io/)
+[Космическая бургерная](https://go-only.github.io/)
 
 **Особенности проекта**
 
