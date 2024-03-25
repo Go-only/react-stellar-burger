@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "..";
+import { RootState } from "../..";
 
 interface IModalState {
   title: string;
@@ -8,7 +8,7 @@ interface IModalState {
   activeModal: string | null;
 }
 
-const initialState: IModalState = {
+export const initialState: IModalState = {
   title: "", // Заголовок модального окна
   isOpen: false, // Открыто модальное окно или нет
   content: null, // Содержимое модального окна

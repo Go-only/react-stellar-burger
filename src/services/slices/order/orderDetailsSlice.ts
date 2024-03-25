@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "..";
-import api from "../../utils/api";
-import { OrderType } from "../../utils/prop-types";
+import { RootState } from "../..";
+import api from "../../../utils/api";
+import { OrderType } from "../../../utils/prop-types";
 
 interface IOrderDetailsState {
   order: {
@@ -12,7 +12,7 @@ interface IOrderDetailsState {
   error: string | null; // Ошибка (если есть)
 }
 
-const initialState: IOrderDetailsState = {
+export const initialState: IOrderDetailsState = {
   order: null,
   currentOrder: null,
   loading: true,
