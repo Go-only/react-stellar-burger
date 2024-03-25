@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
-import { IngredientType } from "../../../utils/prop-types";
+import { IngredientType } from "../../utils/prop-types";
 
 const sliceName = "burgerConstructor";
 
@@ -9,7 +9,7 @@ interface IConstructorState {
   constructorIngredients: IngredientType[];
 }
 
-export const initialState: IConstructorState = {
+const initialState: IConstructorState = {
   bun: null, // булка
   constructorIngredients: [], // список всех ингредиентов в текущем конструкторе бургера
 };

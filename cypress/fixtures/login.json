@@ -1,9 +1,0 @@
-{
-  "success": true,
-  "accessToken": "Bearer Access Token",
-  "refreshToken": "Refresh Token",
-  "user": {
-    "email": "vasya@yandex.ru",
-    "name": "Vasily Vasiliev"
-  }
-}

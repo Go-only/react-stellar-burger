@@ -1,17 +1,17 @@
-import api from "../../../utils/api";
+import api from "../../utils/api";
 import { PayloadAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getActionName,
   isActionPending,
   isActionRejected,
-} from "../../../utils/redux";
-import { deleteCookie, setCookie } from "../../../utils/cookies";
+} from "../../utils/redux";
+import { deleteCookie, setCookie } from "../../utils/cookies";
 
 type State = {
   [key: string]: boolean | null;
 };
 
-export const initialState = {
+const initialState = {
   IsAuthChecked: false, // факт проверки аутентификации пользователя (прошла ли уже эта проверка или нет)
   data: null,
 

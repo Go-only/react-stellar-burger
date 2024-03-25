@@ -10,7 +10,7 @@ import {
 import { calculatePrice } from "../../utils/calculate-price";
 
 import { SpinnerCircular } from "spinners-react";
-import { getOrder } from "../../services/slices/order/orderDetailsSlice";
+import { getOrder } from "../../services/slices/orderDetailsSlice";
 
 function OrderInfo() {
   const dispatch = useDispatch();

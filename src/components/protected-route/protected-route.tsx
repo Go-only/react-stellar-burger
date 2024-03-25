@@ -30,8 +30,7 @@ function ProtectedRoute({
   if (onlyUnAuth && user) {
     console.log("NAVIGATE FROM LOGIN TO INDEX");
     const from = location.state?.from || { pathname: "/" };
-    const backgroundLocation =
-      location.state?.from?.state?.backgroundLocation || null;
+    const backgroundLocation = location.state?.from?.state || null;
     return <Navigate replace to={from} state={{ backgroundLocation }} />;
   }
 

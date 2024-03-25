@@ -2,7 +2,7 @@ import { useSelector } from "../../services";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order-details.module.css";
 import done from "../../images/done.png";
-import { selectOrderDetails } from "../../services/slices/order/orderDetailsSlice";
+import { selectOrderDetails } from "../../services/slices/orderDetailsSlice";
 
 export const OrderDetails = () => {
   const { order, loading, error } = useSelector(selectOrderDetails);
@@ -14,9 +14,7 @@ export const OrderDetails = () => {
           {loading ? "Загружаем номера заказа" : `Произошла ошибка: ${error}`}
         </p>
       ) : (
-        <p className="text text_type_digits-large mt-14" data-cy="order-number">
-          {order?.number}
-        </p>
+        <p className="text text_type_digits-large mt-14">{order?.number}</p>
       )}
 
       <p className="text text_type_main-medium mt-8 mb-15">

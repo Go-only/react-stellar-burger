@@ -29,11 +29,10 @@ export const Modal = ({ onClose, children }: PropsWithChildren<ModalProps>) => {
 
   return createPortal(
     <>
-      <div className={styles.modal} data-cy="modal">
+      <div className={styles.modal}>
         <div className={`${styles.header} pt-10 pr-10 ml-10`}>
           <p className="text text_type_main-large"></p>
           <button
-            data-cy="close-modal"
             type="button"
             className={styles.close_button}
             onClick={onClose}

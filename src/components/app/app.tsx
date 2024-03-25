@@ -15,12 +15,12 @@ import {
   checkUserAuth,
   loginUser,
   registerUser,
-} from "../../services/slices/user/userSlice";
+} from "../../services/slices/userSlice";
 import { IngredientDetails } from "../ingredient-details/ingredient-details";
 import { IngredientPage } from "../../pages/ingredient-page/ingredient-page";
 import { Modal } from "../modal/modal";
 import HomePage from "../../pages/home-page/home-page";
-import { fetchIngredients } from "../../services/slices/ingredients/burgerIngredientsSlice";
+import { fetchIngredients } from "../../services/slices/burgerIngredientsSlice";
 import ErrorPage from "../../pages/error-page/error-page";
 import FeedPage from "../../pages/feed/feed";
 

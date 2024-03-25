@@ -11,15 +11,15 @@ import {
   openModal,
   closeModal,
   selectActiveModal,
-} from "../../services/slices/modal/modalSlice";
+} from "../../services/slices/modalSlice";
 import {
   addConstructorIngredient,
   removeIngredient,
   clearConstructor,
-} from "../../services/slices/constructor/burgerConstructorSlice";
-import { selectIngredients } from "../../services/slices/ingredients/burgerIngredientsSlice";
+} from "../../services/slices/burgerConstructorSlice";
+import { selectIngredients } from "../../services/slices/burgerIngredientsSlice";
 import BurgerConstructorItem from "../burger-constructor-item/burger-constructor-item";
-import { fetchOrderResult } from "../../services/slices/order/orderDetailsSlice";
+import { fetchOrderResult } from "../../services/slices/orderDetailsSlice";
 
 import styles from "./burger-constructor.module.css";
 import { useNavigate } from "react-router-dom";
@@ -92,7 +92,6 @@ export default function BurgerConstructor() {
       <div
         className={styles.wrapper}
         ref={dropTarget}
-        data-cy="constructor"
         style={{ border: isHover ? "1px solid #4c4cff" : "transparent" }}
       >
         <span className={styles.title}>
@@ -105,20 +104,18 @@ export default function BurgerConstructor() {
 
         {/* Верхняя булка */}
         {bun && (
-          <div data-cy="bun-top">
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text={`${bun.name} (верх)`}
-              price={bun.price}
-              thumbnail={bun.image}
-              extraClass={`${styles.element} ml-8`}
-            />
-          </div>
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
+            extraClass={`${styles.element} ml-8`}
+          />
         )}
 
         {/* Список остальных ингредиентов */}
-        <ul className={styles.list} data-cy="constructor-ingredients">
+        <ul className={styles.list}>
           {constructorIngredients.map((ingredient, index) => (
             <BurgerConstructorItem
               item={ingredient}
@@ -131,16 +128,14 @@ export default function BurgerConstructor() {
 
         {/* Нижняя булка */}
         {bun && (
-          <div data-cy="bun-bottom">
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={`${bun.name} (низ)`}
-              price={bun.price}
-              thumbnail={bun.image}
-              extraClass={`${styles.element} ml-8`}
-            />
-          </div>
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
+            extraClass={`${styles.element} ml-8`}
+          />
         )}
       </div>
       <div className={`${styles.zakaz} mt-10 mr-8`}>
@@ -149,7 +144,6 @@ export default function BurgerConstructor() {
           <CurrencyIcon type="primary" />
         </div>
         <Button
-          data-cy="order-button"
           htmlType="button"
           type="primary"
           size="large"

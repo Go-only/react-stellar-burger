@@ -1,7 +1,7 @@
 import styles from "./ingredient-details.module.css";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
-import { selectIngredients } from "../../services/slices/ingredients/burgerIngredientsSlice";
+import { selectIngredients } from "../../services/slices/burgerIngredientsSlice";
 
 export const IngredientDetails = () => {
   const { id } = useParams<{ id: string }>();

@@ -1,15 +1,15 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import burgerIngredientsReducer, {
   burgerIngredientsSlice,
-} from "./slices/ingredients/burgerIngredientsSlice";
+} from "./slices/burgerIngredientsSlice";
 import burgerConstructorReducer, {
   burgerConstructorSlice,
-} from "./slices/constructor/burgerConstructorSlice";
+} from "./slices/burgerConstructorSlice";
 import orderDetailsReducer, {
   orderDetailsSlice,
-} from "./slices/order/orderDetailsSlice";
-import modalReducer, { modalSlice } from "./slices/modal/modalSlice";
-import userReducer, { userSlice } from "./slices/user/userSlice";
+} from "./slices/orderDetailsSlice";
+import modalReducer, { modalSlice } from "./slices/modalSlice";
+import userReducer, { userSlice } from "./slices/userSlice";
 import { feed } from "./feed/reducers";
 import { Orders } from "./orders/reducers";
 

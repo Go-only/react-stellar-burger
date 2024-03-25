@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import {
   selectConstructorIngredients,
   selectBun,
-} from "../../services/slices/constructor/burgerConstructorSlice";
-import { selectIngredients } from "../../services/slices/ingredients/burgerIngredientsSlice";
+} from "../../services/slices/burgerConstructorSlice";
+import { selectIngredients } from "../../services/slices/burgerIngredientsSlice";
 
 interface ListIngredientsProps {
   titleIngredient: string;
