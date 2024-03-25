@@ -2,14 +2,14 @@
 
 **Ссылка на проект**
 
-[Космическая бургерная](https://go-only.github.io/)
+[Космическая бургерная](https://go-only.github.io/react-stellar-burger/)
 
 **Особенности проекта**
 
 - React
 - TypeScript
 - Работа с компонентами (фукнциональные)
-- Работа с хуками useState и useEffect
+- Работа с хуками useState и useEffects
 - Работа с библиотекой dnd (для перетаскивания элементов)
 - Работа с redux toolkit
 - Проверка типов данных
