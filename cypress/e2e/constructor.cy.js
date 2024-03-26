@@ -5,6 +5,7 @@ const BUN = "Булка";
 const FILLING_1 = "Начинка 1";
 const FILLING_2 = "Начинка 2";
 const ORDER_NUMBER = "12345";
+const testUrl = "http://localhost:3000/";
 
 Cypress.Commands.add("dragIngredientToConstructor", (ingredient) => {
   cy.get('[data-cy="ingredients"]').contains(ingredient).trigger("dragstart");
@@ -24,7 +25,7 @@ describe("drag and drop to constructor works correctly", () => {
       fixture: "ingredients.json",
     });
     cy.viewport(1920, 1080);
-    cy.visit("http://localhost:3000/");
+    cy.visit(testUrl);
   });
   it("should drag bun to constructor", () => {
     cy.dragIngredientToConstructor(BUN);
@@ -49,7 +50,7 @@ describe("order works correctly", () => {
     cy.setCookie("accessToken", "mockAccessToken");
     cy.setCookie("refreshToken", "mockRefreshToken");
     cy.viewport(1920, 1080);
-    cy.visit("http://localhost:3000/");
+    cy.visit(testUrl);
   });
   afterEach(() => {
     cy.clearCookies();

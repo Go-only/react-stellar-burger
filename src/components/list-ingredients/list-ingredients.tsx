@@ -1,6 +1,6 @@
 import styles from "./list-ingredients.module.css";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services";
 import {
   selectConstructorIngredients,
   selectBun,

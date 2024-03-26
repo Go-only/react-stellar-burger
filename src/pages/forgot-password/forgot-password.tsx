@@ -4,7 +4,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services";
 import { useState } from "react";
 import { forgotPassword } from "../../services/slices/user/userSlice";
 

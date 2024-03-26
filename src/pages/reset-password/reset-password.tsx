@@ -6,7 +6,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services";
 import { resetPassword } from "../../services/slices/user/userSlice";
 
 export function ResetPage() {
