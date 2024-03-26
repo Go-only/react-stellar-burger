@@ -19,7 +19,7 @@ export default function AppHeader() {
       <nav className={styles.nav}>
         <div className={styles.center}>
           <NavLink
-            to="/"
+            to="/react-stellar-burger/"
             className={({ isActive }) =>
               isActive ? `${activeLink} ${defaultLink}` : `${defaultLink}`
             }
@@ -39,7 +39,7 @@ export default function AppHeader() {
         </div>
 
         <p className={`${styles.center} ${styles.logo}`}>
-          <Link to="/">
+          <Link to="/react-stellar-burger/">
             <Logo />
           </Link>
         </p>

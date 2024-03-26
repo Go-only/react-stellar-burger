@@ -65,7 +65,7 @@ function App() {
               : location
           }
         >
-          <Route path="/" element={<HomePage />} />
+          <Route path="/react-stellar-burger" element={<HomePage />} />
 
           <Route
             path="/login"

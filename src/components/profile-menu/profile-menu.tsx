@@ -24,7 +24,7 @@ export const ProfileMenu: React.FC<ProfileMenuProps> = ({ activeTab }) => {
 
     if (value === "logOut") {
       dispatch(logoutUser());
-      navigate("/");
+      navigate("/react-stellar-burger/");
     }
   };
 
