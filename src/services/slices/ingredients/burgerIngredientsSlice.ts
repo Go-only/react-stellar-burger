@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "..";
-import { IngredientType } from "../../utils/prop-types";
+import { RootState } from "../..";
+import { IngredientType } from "../../../utils/prop-types";
 
-import api from "../../utils/api";
+import api from "../../../utils/api";
 
 // Интерфейс для состояния ингредиентов
 interface IngredientsState {
@@ -12,7 +12,7 @@ interface IngredientsState {
 }
 
 // Начальное состояние для среза ингредиентов бургера
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
   ingredients: [], // Массив ингредиентов
   loading: true, // Флаг загрузки
   error: null, // Ошибка (если есть)

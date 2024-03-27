@@ -46,3 +46,8 @@ export type RefreshResponseWithTokenType = ServerResponse<{
 export type GetOrderType = ServerResponse<{
   orders: OrderType[];
 }>;
+
+export type UserType = {
+  email: string;
+  name: string;
+};

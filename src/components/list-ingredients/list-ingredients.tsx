@@ -1,11 +1,11 @@
 import styles from "./list-ingredients.module.css";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services";
 import {
   selectConstructorIngredients,
   selectBun,
-} from "../../services/slices/burgerConstructorSlice";
-import { selectIngredients } from "../../services/slices/burgerIngredientsSlice";
+} from "../../services/slices/constructor/burgerConstructorSlice";
+import { selectIngredients } from "../../services/slices/ingredients/burgerIngredientsSlice";
 
 interface ListIngredientsProps {
   titleIngredient: string;

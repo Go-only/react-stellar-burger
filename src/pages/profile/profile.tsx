@@ -6,7 +6,10 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "../../services";
-import { checkUserAuth, updateUserInfo } from "../../services/slices/userSlice";
+import {
+  checkUserAuth,
+  updateUserInfo,
+} from "../../services/slices/user/userSlice";
 
 type UserData = {
   name: string;
