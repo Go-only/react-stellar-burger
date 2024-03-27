@@ -5,7 +5,7 @@ const BUN = "Булка";
 const FILLING_1 = "Начинка 1";
 const FILLING_2 = "Начинка 2";
 const ORDER_NUMBER = "12345";
-const testUrl = "http://localhost:3000/";
+const testUrl = "http://localhost:3000/react-stellar-burger";
 
 Cypress.Commands.add("dragIngredientToConstructor", (ingredient) => {
   cy.get('[data-cy="ingredients"]').contains(ingredient).trigger("dragstart");
